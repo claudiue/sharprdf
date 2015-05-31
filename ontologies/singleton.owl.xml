@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:swrlx="http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#"
+    xmlns:swrlm="http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:temporal="http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#"
+    xmlns:tbox="http://swrl.stanford.edu/ontologies/built-ins/3.3/tbox.owl#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sqwrl="http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#"
+    xmlns:abox="http://swrl.stanford.edu/ontologies/built-ins/3.3/abox.owl#"
+    xmlns:oo-code="http://www.cs.uwm.edu/~alnusair/ontologies/oo-code.owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:design-pattern="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#"
+    xmlns:singleton="http://www.cs.uwm.edu/~alnusair/ontologies/singleton.owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
+  xml:base="http://www.cs.uwm.edu/~alnusair/ontologies/singleton.owl">
+  <owl:Ontology rdf:about="">
+    <owl:imports rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl"/>
+  </owl:Ontology>
+  <owl:Class rdf:about="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#Participant"/>
+  <owl:Class rdf:ID="SingletonMethod">
+    <rdfs:subClassOf rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#Participant"/>
+  </owl:Class>
+  <owl:Class rdf:ID="SingletonField">
+    <rdfs:subClassOf rdf:resource="#SingletonMethod"/>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#CreationalPattern"/>
+  <owl:Class rdf:ID="Singleton">
+    <rdfs:subClassOf rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#CreationalPattern"/>
+    <rdfs:comment xml:lang="en">Singleton is a design pattern used to ensure that a class has only one instance and provides a global point of access to it.</rdfs:comment>
+    <rdfs:label xml:lang="en">Singleton</rdfs:label>
+    <dc:description xml:lang="en">Singleton design pattern first introduced by GoF</dc:description>
+  </owl:Class>
+  <swrl:Imp rdf:about="singleton:s-method">
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        <rdf:first>
+          <swrl:ClassAtom>
+            <swrl:argument1>
+              <swrl:Variable rdf:ID="cc"/>
+            </swrl:argument1>
+            <swrl:classPredicate rdf:resource="#SingletonMethod"/>
+          </swrl:ClassAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:head>
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:rest>
+                  <swrl:AtomList>
+                    <rdf:first>
+                      <swrl:ClassAtom>
+                        <swrl:argument1>
+                          <swrl:Variable rdf:ID="ac"/>
+                        </swrl:argument1>
+                        <swrl:classPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#PublicModifier"/>
+                      </swrl:ClassAtom>
+                    </rdf:first>
+                    <rdf:rest>
+                      <swrl:AtomList>
+                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                        <rdf:first>
+                          <swrl:IndividualPropertyAtom>
+                            <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasOutputType"/>
+                            <swrl:argument1>
+                              <swrl:Variable rdf:ID="m"/>
+                            </swrl:argument1>
+                            <swrl:argument2 rdf:resource="#cc"/>
+                          </swrl:IndividualPropertyAtom>
+                        </rdf:first>
+                      </swrl:AtomList>
+                    </rdf:rest>
+                  </swrl:AtomList>
+                </rdf:rest>
+                <rdf:first>
+                  <swrl:IndividualPropertyAtom>
+                    <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasAccessControl"/>
+                    <swrl:argument2 rdf:resource="#ac"/>
+                    <swrl:argument1 rdf:resource="#m"/>
+                  </swrl:IndividualPropertyAtom>
+                </rdf:first>
+              </swrl:AtomList>
+            </rdf:rest>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasStaticMethod"/>
+                <swrl:argument2 rdf:resource="#m"/>
+                <swrl:argument1 rdf:resource="#cc"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+          </swrl:AtomList>
+        </rdf:rest>
+        <rdf:first>
+          <swrl:ClassAtom>
+            <swrl:argument1 rdf:resource="#cc"/>
+            <swrl:classPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#ConcreteClass"/>
+          </swrl:ClassAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:body>
+  </swrl:Imp>
+  <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/description"/>
+  <swrl:Imp rdf:about="singleton:s-field">
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:first>
+          <swrl:ClassAtom>
+            <swrl:classPredicate rdf:resource="#SingletonMethod"/>
+            <swrl:argument1 rdf:resource="#cc"/>
+          </swrl:ClassAtom>
+        </rdf:first>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:argument1 rdf:resource="#cc"/>
+                <swrl:argument2>
+                  <swrl:Variable rdf:ID="f"/>
+                </swrl:argument2>
+                <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasStaticField"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:rest>
+                  <swrl:AtomList>
+                    <rdf:first>
+                      <swrl:IndividualPropertyAtom>
+                        <swrl:argument2 rdf:resource="#ac"/>
+                        <swrl:argument1 rdf:resource="#f"/>
+                        <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasAccessControl"/>
+                      </swrl:IndividualPropertyAtom>
+                    </rdf:first>
+                    <rdf:rest>
+                      <swrl:AtomList>
+                        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                        <rdf:first>
+                          <swrl:ClassAtom>
+                            <swrl:argument1 rdf:resource="#ac"/>
+                            <swrl:classPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#PrivateModifier"/>
+                          </swrl:ClassAtom>
+                        </rdf:first>
+                      </swrl:AtomList>
+                    </rdf:rest>
+                  </swrl:AtomList>
+                </rdf:rest>
+                <rdf:first>
+                  <swrl:IndividualPropertyAtom>
+                    <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasDataType"/>
+                    <swrl:argument2 rdf:resource="#cc"/>
+                    <swrl:argument1 rdf:resource="#f"/>
+                  </swrl:IndividualPropertyAtom>
+                </rdf:first>
+              </swrl:AtomList>
+            </rdf:rest>
+          </swrl:AtomList>
+        </rdf:rest>
+      </swrl:AtomList>
+    </swrl:body>
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:first>
+          <swrl:ClassAtom>
+            <swrl:argument1 rdf:resource="#cc"/>
+            <swrl:classPredicate rdf:resource="#SingletonField"/>
+          </swrl:ClassAtom>
+        </rdf:first>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+      </swrl:AtomList>
+    </swrl:head>
+  </swrl:Imp>
+  <swrl:Imp rdf:about="singleton:singleton-rule">
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:first>
+          <swrl:ClassAtom>
+            <swrl:argument1 rdf:resource="#cc"/>
+            <swrl:classPredicate rdf:resource="#SingletonField"/>
+          </swrl:ClassAtom>
+        </rdf:first>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:rest>
+                  <swrl:AtomList>
+                    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                    <rdf:first>
+                      <swrl:ClassAtom>
+                        <swrl:argument1 rdf:resource="#ac"/>
+                        <swrl:classPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#PrivateModifier"/>
+                      </swrl:ClassAtom>
+                    </rdf:first>
+                  </swrl:AtomList>
+                </rdf:rest>
+                <rdf:first>
+                  <swrl:IndividualPropertyAtom>
+                    <swrl:argument2 rdf:resource="#ac"/>
+                    <swrl:argument1>
+                      <swrl:Variable rdf:ID="co"/>
+                    </swrl:argument1>
+                    <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasAccessControl"/>
+                  </swrl:IndividualPropertyAtom>
+                </rdf:first>
+              </swrl:AtomList>
+            </rdf:rest>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:argument2 rdf:resource="#co"/>
+                <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasConstructor"/>
+                <swrl:argument1 rdf:resource="#cc"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+          </swrl:AtomList>
+        </rdf:rest>
+      </swrl:AtomList>
+    </swrl:body>
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:first>
+          <swrl:ClassAtom>
+            <swrl:classPredicate rdf:resource="#Singleton"/>
+            <swrl:argument1 rdf:resource="#cc"/>
+          </swrl:ClassAtom>
+        </rdf:first>
+        <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+      </swrl:AtomList>
+    </swrl:head>
+  </swrl:Imp>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.4, Build 519)  http://protege.stanford.edu -->

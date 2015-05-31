@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY owl2xml "http://www.w3.org/2006/12/owl2-xml#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY scro "http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#" >
+    <!ENTITY design-pattern "http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#"
+     xml:base="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:scro="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:design-pattern="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#">
+    <owl:Ontology rdf:about="">
+        <owl:versionInfo xml:lang="en">1.0</owl:versionInfo>
+        <rdfs:comment xml:lang="en"
+            >An ontology for describing design patterns</rdfs:comment>
+        <owl:imports rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#hasParticipant -->
+
+    <owl:ObjectProperty rdf:about="#hasParticipant">
+        <rdfs:comment xml:lang="en"
+            >The participant of a design pattern</rdfs:comment>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#isParticipantOf -->
+
+    <owl:ObjectProperty rdf:about="#isParticipantOf">
+        <owl:inverseOf rdf:resource="#hasParticipant"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#BehavioralPattern -->
+
+    <owl:Class rdf:about="#BehavioralPattern">
+        <rdfs:label xml:lang="en"
+            >Behavioral Pattern</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#DesignPattern"/>
+        <rdfs:comment xml:lang="en"
+            >Behavioral Patterns deal with identifying common communication patterns between objects and realizing these patterns.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#CreationalPattern -->
+
+    <owl:Class rdf:about="#CreationalPattern">
+        <rdfs:label xml:lang="en"
+            >Creational Pattern</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#DesignPattern"/>
+        <rdfs:comment xml:lang="en"
+            >Creational patterns deal with object creation mechanisims</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#DesignPattern -->
+
+    <owl:Class rdf:about="#DesignPattern">
+        <rdfs:label xml:lang="en">Design Pattern</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:comment xml:lang="en"
+            >Represents different kinds of object oriented software patterns</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#OtherPattern -->
+
+    <owl:Class rdf:about="#OtherPattern">
+        <rdfs:subClassOf rdf:resource="#DesignPattern"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#Participant -->
+
+    <owl:Class rdf:about="#Participant">
+        <rdfs:label xml:lang="en">Participant</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:comment xml:lang="en"
+            >The classes and objects participating in a design pattern</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#StructuralPattern -->
+
+    <owl:Class rdf:about="#StructuralPattern">
+        <rdfs:label xml:lang="en"
+            >Structural Pattern</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#DesignPattern"/>
+        <rdfs:comment xml:lang="en"
+            >Structural patterns deal with identifying simple ways to realize relationships between entities.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <owl:Class rdf:about="&owl;Thing"/>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 2.2.1.974) http://owlapi.sourceforge.net -->
+

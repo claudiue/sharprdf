@@ -1,0 +1,329 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:swrlx="http://swrl.stanford.edu/ontologies/built-ins/3.3/swrlx.owl#"
+    xmlns:swrlm="http://swrl.stanford.edu/ontologies/built-ins/3.4/swrlm.owl#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+    xmlns:template-method="http://www.cs.uwm.edu/~alnusair/ontologies/template-method.owl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:temporal="http://swrl.stanford.edu/ontologies/built-ins/3.3/temporal.owl#"
+    xmlns:tbox="http://swrl.stanford.edu/ontologies/built-ins/3.3/tbox.owl#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:sqwrl="http://sqwrl.stanford.edu/ontologies/built-ins/3.4/sqwrl.owl#"
+    xmlns:abox="http://swrl.stanford.edu/ontologies/built-ins/3.3/abox.owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:design-pattern="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:swrla="http://swrl.stanford.edu/ontologies/3.3/swrla.owl#"
+  xml:base="http://www.cs.uwm.edu/~alnusair/ontologies/template-method.owl">
+  <owl:Ontology rdf:about="">
+    <owl:imports rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl"/>
+  </owl:Ontology>
+  <owl:Class rdf:ID="TM-Concrete-Class">
+    <rdfs:comment xml:lang="en">Represents the subclass that extends the template class in the Template Method design pattern</rdfs:comment>
+    <rdfs:label xml:lang="en">TM Concrete Class</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Template-Method-Participants"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#Participant"/>
+  <owl:Class rdf:ID="TM-Template-Class">
+    <rdfs:comment xml:lang="en">Represents the Template Class of the Termplate Method design pattern. That's the abstract class that contains the template method</rdfs:comment>
+    <rdfs:label xml:lang="en">TM Template Class</rdfs:label>
+    <rdfs:subClassOf>
+      <owl:Class rdf:about="#Template-Method-Participants"/>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:about="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#BehavioralPattern"/>
+  <owl:Class rdf:about="#Template-Method-Participants">
+    <rdfs:label xml:lang="en">Template Method Participants</rdfs:label>
+    <rdfs:subClassOf rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#Participant"/>
+    <rdfs:comment xml:lang="en">Represents all the participants in the Template Method design pattern</rdfs:comment>
+  </owl:Class>
+  <owl:Class rdf:ID="Template-Method">
+    <dc:description xml:lang="en">Composite design pattern first introduced by GoF</dc:description>
+    <rdfs:label xml:lang="en">Template Method</rdfs:label>
+    <rdfs:comment xml:lang="en">This Behavioral pattern defines a skeleton of an algorithm in an operation (template method).  Subclasses that inherit the template method can redefine the certain steps of the algorithm without changing the algorithm's structure.</rdfs:comment>
+    <rdfs:subClassOf rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#BehavioralPattern"/>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="hasTMTemplateClass">
+    <rdfs:range rdf:resource="#TM-Template-Class"/>
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:about="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#hasParticipant"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#Template-Method"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="isTMTemplateClassOf">
+    <rdfs:range rdf:resource="#Template-Method"/>
+    <rdfs:subPropertyOf>
+      <owl:ObjectProperty rdf:about="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#isParticipantOf"/>
+    </rdfs:subPropertyOf>
+    <owl:inverseOf rdf:resource="#hasTMTemplateClass"/>
+    <rdfs:domain rdf:resource="#TM-Template-Class"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="hasTMConcreteClass">
+    <rdfs:range rdf:resource="#TM-Concrete-Class"/>
+    <rdfs:domain rdf:resource="#Template-Method"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#hasParticipant"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="isTMConcreteClassOf">
+    <rdfs:range rdf:resource="#Template-Method"/>
+    <owl:inverseOf rdf:resource="#hasTMConcreteClass"/>
+    <rdfs:subPropertyOf rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl#isParticipantOf"/>
+    <rdfs:domain rdf:resource="#TM-Concrete-Class"/>
+  </owl:ObjectProperty>
+  <swrl:Imp rdf:about="template-method:TemplateMethod-Rule">
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:argument2>
+                  <swrl:Variable rdf:ID="op1"/>
+                </swrl:argument2>
+                <swrl:argument1>
+                  <swrl:Variable rdf:ID="t-class"/>
+                </swrl:argument1>
+                <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasAbstractMethod"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:rest>
+                  <swrl:AtomList>
+                    <rdf:first>
+                      <swrl:ClassAtom>
+                        <swrl:argument1>
+                          <swrl:Variable rdf:ID="ac"/>
+                        </swrl:argument1>
+                        <swrl:classPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#ProtectedModifier"/>
+                      </swrl:ClassAtom>
+                    </rdf:first>
+                    <rdf:rest>
+                      <swrl:AtomList>
+                        <rdf:first>
+                          <swrl:IndividualPropertyAtom>
+                            <swrl:argument2 rdf:resource="#op1"/>
+                            <swrl:argument1>
+                              <swrl:Variable rdf:ID="t-method"/>
+                            </swrl:argument1>
+                            <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#invokesMethod"/>
+                          </swrl:IndividualPropertyAtom>
+                        </rdf:first>
+                        <rdf:rest>
+                          <swrl:AtomList>
+                            <rdf:first>
+                              <swrl:IndividualPropertyAtom>
+                                <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#inherits"/>
+                                <swrl:argument1>
+                                  <swrl:Variable rdf:ID="sub-class"/>
+                                </swrl:argument1>
+                                <swrl:argument2 rdf:resource="#t-class"/>
+                              </swrl:IndividualPropertyAtom>
+                            </rdf:first>
+                            <rdf:rest>
+                              <swrl:AtomList>
+                                <rdf:rest>
+                                  <swrl:AtomList>
+                                    <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                                    <rdf:first>
+                                      <swrl:IndividualPropertyAtom>
+                                        <swrl:argument1>
+                                          <swrl:Variable rdf:ID="op2"/>
+                                        </swrl:argument1>
+                                        <swrl:argument2 rdf:resource="#op1"/>
+                                        <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#methodOverrides"/>
+                                      </swrl:IndividualPropertyAtom>
+                                    </rdf:first>
+                                  </swrl:AtomList>
+                                </rdf:rest>
+                                <rdf:first>
+                                  <swrl:IndividualPropertyAtom>
+                                    <swrl:argument1 rdf:resource="#sub-class"/>
+                                    <swrl:argument2 rdf:resource="#op2"/>
+                                    <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasInstanceMethod"/>
+                                  </swrl:IndividualPropertyAtom>
+                                </rdf:first>
+                              </swrl:AtomList>
+                            </rdf:rest>
+                          </swrl:AtomList>
+                        </rdf:rest>
+                      </swrl:AtomList>
+                    </rdf:rest>
+                  </swrl:AtomList>
+                </rdf:rest>
+                <rdf:first>
+                  <swrl:IndividualPropertyAtom>
+                    <swrl:argument2 rdf:resource="#ac"/>
+                    <swrl:argument1 rdf:resource="#op1"/>
+                    <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasAccessControl"/>
+                  </swrl:IndividualPropertyAtom>
+                </rdf:first>
+              </swrl:AtomList>
+            </rdf:rest>
+          </swrl:AtomList>
+        </rdf:rest>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:argument2 rdf:resource="#t-method"/>
+            <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasInstanceMethod"/>
+            <swrl:argument1 rdf:resource="#t-class"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:body>
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                <rdf:first>
+                  <swrl:IndividualPropertyAtom>
+                    <swrl:argument1 rdf:resource="#t-method"/>
+                    <swrl:argument2 rdf:resource="#sub-class"/>
+                    <swrl:propertyPredicate rdf:resource="#hasTMConcreteClass"/>
+                  </swrl:IndividualPropertyAtom>
+                </rdf:first>
+              </swrl:AtomList>
+            </rdf:rest>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:argument1 rdf:resource="#t-method"/>
+                <swrl:propertyPredicate rdf:resource="#hasTMTemplateClass"/>
+                <swrl:argument2 rdf:resource="#t-class"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+          </swrl:AtomList>
+        </rdf:rest>
+        <rdf:first>
+          <swrl:ClassAtom>
+            <swrl:classPredicate rdf:resource="#Template-Method"/>
+            <swrl:argument1 rdf:resource="#t-method"/>
+          </swrl:ClassAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:head>
+  </swrl:Imp>
+  <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/description"/>
+  <rdf:Description rdf:about="http://www.cs.uwm.edu/~alnusair/ontologies/Template-Method-Rule">
+    <swrl:body>
+      <swrl:AtomList>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:rest>
+              <swrl:AtomList>
+                <rdf:first>
+                  <swrl:IndividualPropertyAtom>
+                    <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasAbstractMethod"/>
+                    <swrl:argument1>
+                      <swrl:Variable rdf:about="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#t-class"/>
+                    </swrl:argument1>
+                    <swrl:argument2>
+                      <swrl:Variable rdf:about="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#op1"/>
+                    </swrl:argument2>
+                  </swrl:IndividualPropertyAtom>
+                </rdf:first>
+                <rdf:rest>
+                  <swrl:AtomList>
+                    <rdf:first>
+                      <swrl:IndividualPropertyAtom>
+                        <swrl:argument2 rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#op1"/>
+                        <swrl:argument1>
+                          <swrl:Variable rdf:about="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#t-method"/>
+                        </swrl:argument1>
+                        <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#invokesMethod"/>
+                      </swrl:IndividualPropertyAtom>
+                    </rdf:first>
+                    <rdf:rest>
+                      <swrl:AtomList>
+                        <rdf:first>
+                          <swrl:IndividualPropertyAtom>
+                            <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#inherits"/>
+                            <swrl:argument2 rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#t-class"/>
+                            <swrl:argument1>
+                              <swrl:Variable rdf:about="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#sub-class"/>
+                            </swrl:argument1>
+                          </swrl:IndividualPropertyAtom>
+                        </rdf:first>
+                        <rdf:rest>
+                          <swrl:AtomList>
+                            <rdf:first>
+                              <swrl:IndividualPropertyAtom>
+                                <swrl:argument1 rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#sub-class"/>
+                                <swrl:argument2>
+                                  <swrl:Variable rdf:about="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#op2"/>
+                                </swrl:argument2>
+                                <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasInstanceMethod"/>
+                              </swrl:IndividualPropertyAtom>
+                            </rdf:first>
+                            <rdf:rest>
+                              <swrl:AtomList>
+                                <rdf:first>
+                                  <swrl:IndividualPropertyAtom>
+                                    <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#methodOverrides"/>
+                                    <swrl:argument2 rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#op1"/>
+                                    <swrl:argument1 rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#op2"/>
+                                  </swrl:IndividualPropertyAtom>
+                                </rdf:first>
+                                <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                              </swrl:AtomList>
+                            </rdf:rest>
+                          </swrl:AtomList>
+                        </rdf:rest>
+                      </swrl:AtomList>
+                    </rdf:rest>
+                  </swrl:AtomList>
+                </rdf:rest>
+              </swrl:AtomList>
+            </rdf:rest>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:argument1 rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#t-class"/>
+                <swrl:argument2 rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#t-method"/>
+                <swrl:propertyPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasInstanceMethod"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+          </swrl:AtomList>
+        </rdf:rest>
+        <rdf:first>
+          <swrl:ClassAtom>
+            <swrl:argument1 rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#t-class"/>
+            <swrl:classPredicate rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#AbstractClass"/>
+          </swrl:ClassAtom>
+        </rdf:first>
+      </swrl:AtomList>
+    </swrl:body>
+    <swrl:head>
+      <swrl:AtomList>
+        <rdf:first>
+          <swrl:IndividualPropertyAtom>
+            <swrl:argument2 rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#t-class"/>
+            <swrl:argument1 rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#t-method"/>
+            <swrl:propertyPredicate rdf:resource="#hasTMTemplateClass"/>
+          </swrl:IndividualPropertyAtom>
+        </rdf:first>
+        <rdf:rest>
+          <swrl:AtomList>
+            <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+            <rdf:first>
+              <swrl:IndividualPropertyAtom>
+                <swrl:propertyPredicate rdf:resource="#hasTMConcreteClass"/>
+                <swrl:argument2 rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#sub-class"/>
+                <swrl:argument1 rdf:resource="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#t-method"/>
+              </swrl:IndividualPropertyAtom>
+            </rdf:first>
+          </swrl:AtomList>
+        </rdf:rest>
+      </swrl:AtomList>
+    </swrl:head>
+  </rdf:Description>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.4, Build 519)  http://protege.stanford.edu -->

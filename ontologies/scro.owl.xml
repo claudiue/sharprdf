@@ -1,0 +1,3586 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY owl2 "http://www.w3.org/2006/12/owl2#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY owl2xml "http://www.w3.org/2006/12/owl2-xml#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY scro "http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#"
+     xml:base="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:scro="http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl2="http://www.w3.org/2006/12/owl2#">
+    <owl:Ontology rdf:about="">
+        <owl:versionInfo xml:lang="en">1.0</owl:versionInfo>
+        <dc:creator xml:lang="en">Awny Alnusair</dc:creator>
+        <rdfs:comment xml:lang="en"
+            >The Source Code Representation Ontology (SCRO).
+This ontology is created to explicitly represent the conceptual knowledge structure in object-oriented source code.</rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:AnnotationProperty rdf:about="&dc;date"/>
+    <owl:AnnotationProperty rdf:about="&dc;language"/>
+    <owl:AnnotationProperty rdf:about="&dc;creator"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#annotatedBy -->
+
+    <owl:ObjectProperty rdf:about="#annotatedBy">
+        <rdfs:range rdf:resource="#AnnotationType"/>
+        <owl:inverseOf rdf:resource="#annotates"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#Field"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                    <rdf:Description rdf:about="#Method"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#annotates -->
+
+    <owl:ObjectProperty rdf:about="#annotates">
+        <rdfs:domain rdf:resource="#AnnotationType"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#Field"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                    <rdf:Description rdf:about="#Method"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#belongsToPackage -->
+
+    <owl:ObjectProperty rdf:about="#belongsToPackage">
+        <rdfs:domain rdf:resource="#CompilationUnit"/>
+        <rdfs:range rdf:resource="#Package"/>
+        <owl:inverseOf rdf:resource="#containsCUnit"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#containsCUnit -->
+
+    <owl:ObjectProperty rdf:about="#containsCUnit">
+        <rdfs:range rdf:resource="#CompilationUnit"/>
+        <rdfs:domain rdf:resource="#Package"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#containsLoop -->
+
+    <owl:ObjectProperty rdf:about="#containsLoop">
+        <rdfs:domain rdf:resource="#Method"/>
+        <rdfs:range rdf:resource="#RepetitionStructure"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#containsRefType -->
+
+    <owl:ObjectProperty rdf:about="#containsRefType">
+        <rdfs:domain rdf:resource="#CompilationUnit"/>
+        <owl:inverseOf rdf:resource="#definedInCUnit"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#containsSelection -->
+
+    <owl:ObjectProperty rdf:about="#containsSelection">
+        <rdfs:comment xml:lang="en"
+            >Relates a method that contains a Selection Structuresuch as an If statement  to the kind of comparison performed by this structure</rdfs:comment>
+        <rdfs:domain rdf:resource="#Method"/>
+        <rdfs:range rdf:resource="#SelectionStructure"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#containsSequence -->
+
+    <owl:ObjectProperty rdf:about="#containsSequence">
+        <rdfs:domain rdf:resource="#Method"/>
+        <rdfs:range rdf:resource="#SequenceStructure"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#definedInCUnit -->
+
+    <owl:ObjectProperty rdf:about="#definedInCUnit">
+        <rdfs:range rdf:resource="#CompilationUnit"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasAbstractMethod -->
+
+    <owl:ObjectProperty rdf:about="#hasAbstractMethod">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:range rdf:resource="#AbstractMethod"/>
+        <rdfs:subPropertyOf rdf:resource="#hasMethod"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AbstractClass"/>
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                    <rdf:Description rdf:about="#StaticMemberClass"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasAccessControl -->
+
+    <owl:ObjectProperty rdf:about="#hasAccessControl">
+        <rdfs:range rdf:resource="#AccessControl"/>
+        <owl:inverseOf rdf:resource="#isAccessControlOf"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#Field"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                    <rdf:Description rdf:about="#Method"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasActualOutputType -->
+
+    <owl:ObjectProperty rdf:about="#hasActualOutputType">
+        <rdfs:comment xml:lang="en"
+            >The actual return type of a method, not the declared return type</rdfs:comment>
+        <rdfs:domain rdf:resource="#Method"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#DataType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasAnonymousClass -->
+
+    <owl:ObjectProperty rdf:about="#hasAnonymousClass">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:range rdf:resource="#AnonymousClass"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasCompilationUnit -->
+
+    <owl:ObjectProperty rdf:about="#hasCompilationUnit">
+        <rdfs:comment xml:lang="en"
+            >Relates a program to it&#39;s compilation units</rdfs:comment>
+        <rdfs:range rdf:resource="#CompilationUnit"/>
+        <rdfs:domain rdf:resource="#Program"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasComplexDataType -->
+
+    <owl:ObjectProperty rdf:about="#hasComplexDataType">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:range rdf:resource="#ComplexDataType"/>
+        <rdfs:subPropertyOf rdf:resource="#hasDataType"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#Field"/>
+                    <rdf:Description rdf:about="#LocalVariable"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasConstructor -->
+
+    <owl:ObjectProperty rdf:about="#hasConstructor">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:range rdf:resource="#Constructor"/>
+        <rdfs:subPropertyOf rdf:resource="#hasMethod"/>
+        <owl:inverseOf rdf:resource="#isConstructorOf"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasDataType -->
+
+    <owl:ObjectProperty rdf:about="#hasDataType">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:comment xml:lang="en"
+            >represents the a field or a local variable&#39;s data type</rdfs:comment>
+        <rdfs:range rdf:resource="#DataType"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#Field"/>
+                    <rdf:Description rdf:about="#LocalVariable"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasField -->
+
+    <owl:ObjectProperty rdf:about="#hasField">
+        <rdfs:range rdf:resource="#Field"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasFinalMethod -->
+
+    <owl:ObjectProperty rdf:about="#hasFinalMethod">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:range rdf:resource="#FinalMethod"/>
+        <rdfs:subPropertyOf rdf:resource="#hasInstanceMethod"/>
+        <owl:inverseOf rdf:resource="#isFinalMethodOf"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasInputType -->
+
+    <owl:ObjectProperty rdf:about="#hasInputType">
+        <rdfs:comment xml:lang="en"
+            >The datatype of a method&#39;s formal parameter</rdfs:comment>
+        <rdfs:domain rdf:resource="#Method"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#DataType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasInstanceField -->
+
+    <owl:ObjectProperty rdf:about="#hasInstanceField">
+        <rdfs:range rdf:resource="#InstanceField"/>
+        <rdfs:subPropertyOf rdf:resource="#hasField"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasInstanceMethod -->
+
+    <owl:ObjectProperty rdf:about="#hasInstanceMethod">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:range rdf:resource="#InstanceMethod"/>
+        <rdfs:subPropertyOf rdf:resource="#hasMethod"/>
+        <owl:inverseOf rdf:resource="#isInstanceMethodOf"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasLocalClass -->
+
+    <owl:ObjectProperty rdf:about="#hasLocalClass">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:range rdf:resource="#LocalClass"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasLocalVariable -->
+
+    <owl:ObjectProperty rdf:about="#hasLocalVariable">
+        <rdfs:comment xml:lang="en"
+            >Method&#39;s actual local variables</rdfs:comment>
+        <rdfs:range rdf:resource="#LocalVariable"/>
+        <rdfs:domain rdf:resource="#Method"/>
+        <owl:inverseOf rdf:resource="#isLocalVariableOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasMember -->
+
+    <owl:ObjectProperty rdf:about="#hasMember">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#NonStaticMemberClass"/>
+                    <rdf:Description rdf:about="#StaticMemberAnnotation"/>
+                    <rdf:Description rdf:about="#StaticMemberClass"/>
+                    <rdf:Description rdf:about="#StaticMemberEnum"/>
+                    <rdf:Description rdf:about="#StaticMemberInterface"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasMethod -->
+
+    <owl:ObjectProperty rdf:about="#hasMethod">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:range rdf:resource="#Method"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#ComplexDataType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasOuterClass -->
+
+    <owl:ObjectProperty rdf:about="#hasOuterClass">
+        <rdfs:comment xml:lang="en"
+            >Describes the outer class that a given nested class is defined within</rdfs:comment>
+        <rdfs:range rdf:resource="#ClassType"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasOutputType -->
+
+    <owl:ObjectProperty rdf:about="#hasOutputType">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:comment xml:lang="en"
+            >The return type of a method. It can be a reference type, primitive type or none</rdfs:comment>
+        <rdfs:domain rdf:resource="#Method"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#DataType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasPackageMember -->
+
+    <owl:ObjectProperty rdf:about="#hasPackageMember">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="#Package"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                    <rdf:Description rdf:about="#Package"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasParameter -->
+
+    <owl:ObjectProperty rdf:about="#hasParameter">
+        <rdfs:comment xml:lang="en"
+            >The methods actual formal parameter</rdfs:comment>
+        <rdfs:domain rdf:resource="#Method"/>
+        <rdfs:range rdf:resource="#Parameter"/>
+        <rdfs:subPropertyOf rdf:resource="#hasLocalVariable"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasPart -->
+
+    <owl:ObjectProperty rdf:about="#hasPart">
+        <rdfs:comment xml:lang="en"
+            >Represents aggregation relationship between objects (Whole-Part relationship). A subset of &#39;use&#39; relationship, concerned with only the objects that are direct parts of another object</rdfs:comment>
+        <owl:inverseOf rdf:resource="#isPartOf"/>
+        <rdfs:subPropertyOf rdf:resource="#use"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#ComplexDataType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#ComplexDataType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasStaticField -->
+
+    <owl:ObjectProperty rdf:about="#hasStaticField">
+        <rdfs:range rdf:resource="#StaticField"/>
+        <rdfs:subPropertyOf rdf:resource="#hasField"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasStaticMethod -->
+
+    <owl:ObjectProperty rdf:about="#hasStaticMethod">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:range rdf:resource="#StaticMethod"/>
+        <rdfs:subPropertyOf rdf:resource="#hasMethod"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasStructuredDataType -->
+
+    <owl:ObjectProperty rdf:about="#hasStructuredDataType">
+        <rdfs:range rdf:resource="#StructuredDataType"/>
+        <rdfs:subPropertyOf rdf:resource="#hasComplexDataType"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#Field"/>
+                    <rdf:Description rdf:about="#LocalVariable"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasSubType -->
+
+    <owl:ObjectProperty rdf:about="#hasSubType">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasSuperType -->
+
+    <owl:ObjectProperty rdf:about="#hasSuperType">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:comment xml:lang="en"
+            >A type that&#39;s implemented or inherited by other type is considered a super type of the other type</rdfs:comment>
+        <owl:inverseOf rdf:resource="#hasSubType"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#implementedBy -->
+
+    <owl:ObjectProperty rdf:about="#implementedBy">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:subPropertyOf rdf:resource="#hasSubType"/>
+        <owl:inverseOf rdf:resource="#implements"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#implements -->
+
+    <owl:ObjectProperty rdf:about="#implements">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:subPropertyOf rdf:resource="#hasSuperType"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#importedBy -->
+
+    <owl:ObjectProperty rdf:about="#importedBy">
+        <rdfs:range rdf:resource="#CompilationUnit"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                    <rdf:Description rdf:about="#Package"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#imports -->
+
+    <owl:ObjectProperty rdf:about="#imports">
+        <rdfs:domain rdf:resource="#CompilationUnit"/>
+        <owl:inverseOf rdf:resource="#importedBy"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                    <rdf:Description rdf:about="#Package"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#inheritedBy -->
+
+    <owl:ObjectProperty rdf:about="#inheritedBy">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:subPropertyOf rdf:resource="#hasSubType"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#inherits -->
+
+    <owl:ObjectProperty rdf:about="#inherits">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:subPropertyOf rdf:resource="#hasSuperType"/>
+        <owl:inverseOf rdf:resource="#inheritedBy"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#invokesMethod -->
+
+    <owl:ObjectProperty rdf:about="#invokesMethod">
+        <rdfs:domain rdf:resource="#Method"/>
+        <rdfs:range rdf:resource="#Method"/>
+        <owl:inverseOf rdf:resource="#methodInvokedBy"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isAbstractMethodOf -->
+
+    <owl:ObjectProperty rdf:about="#isAbstractMethodOf">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="#AbstractMethod"/>
+        <owl:inverseOf rdf:resource="#hasAbstractMethod"/>
+        <rdfs:subPropertyOf rdf:resource="#isMethodOf"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AbstractClass"/>
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                    <rdf:Description rdf:about="#StaticMemberClass"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isAccessControlOf -->
+
+    <owl:ObjectProperty rdf:about="#isAccessControlOf">
+        <rdfs:domain rdf:resource="#AccessControl"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#Field"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                    <rdf:Description rdf:about="#Method"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isAnonymousClassOf -->
+
+    <owl:ObjectProperty rdf:about="#isAnonymousClassOf">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:comment xml:lang="en"
+            >An anonymous inner class that&#39;s non-static member is usually enclosed within a method or a block that belong to another type</rdfs:comment>
+        <rdfs:domain rdf:resource="#AnonymousClass"/>
+        <owl:inverseOf rdf:resource="#hasAnonymousClass"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isComplexDataTypeOf -->
+
+    <owl:ObjectProperty rdf:about="#isComplexDataTypeOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="#ComplexDataType"/>
+        <rdfs:subPropertyOf rdf:resource="#isDataTypeOf"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#Field"/>
+                    <rdf:Description rdf:about="#LocalVariable"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isConstructorOf -->
+
+    <owl:ObjectProperty rdf:about="#isConstructorOf">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="#Constructor"/>
+        <rdfs:subPropertyOf rdf:resource="#isMethodOf"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isDataTypeOf -->
+
+    <owl:ObjectProperty rdf:about="#isDataTypeOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="#DataType"/>
+        <owl:inverseOf rdf:resource="#hasDataType"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#Field"/>
+                    <rdf:Description rdf:about="#LocalVariable"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isFieldOf -->
+
+    <owl:ObjectProperty rdf:about="#isFieldOf">
+        <rdfs:domain rdf:resource="#Field"/>
+        <owl:inverseOf rdf:resource="#hasField"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isFinalMethodOf -->
+
+    <owl:ObjectProperty rdf:about="#isFinalMethodOf">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="#FinalMethod"/>
+        <rdfs:subPropertyOf rdf:resource="#isInstanceMethodOf"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isInputTypeOf -->
+
+    <owl:ObjectProperty rdf:about="#isInputTypeOf">
+        <rdfs:range rdf:resource="#Method"/>
+        <owl:inverseOf rdf:resource="#hasInputType"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#DataType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isInstanceFieldOf -->
+
+    <owl:ObjectProperty rdf:about="#isInstanceFieldOf">
+        <rdfs:domain rdf:resource="#InstanceField"/>
+        <owl:inverseOf rdf:resource="#hasInstanceField"/>
+        <rdfs:subPropertyOf rdf:resource="#isFieldOf"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isInstanceMethodOf -->
+
+    <owl:ObjectProperty rdf:about="#isInstanceMethodOf">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="#InstanceMethod"/>
+        <rdfs:subPropertyOf rdf:resource="#isMethodOf"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isLocalClassOf -->
+
+    <owl:ObjectProperty rdf:about="#isLocalClassOf">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:comment xml:lang="en"
+            >A local inner class that&#39;s non-static member is usually enclosed within a method or a block that belong to another type</rdfs:comment>
+        <rdfs:domain rdf:resource="#LocalClass"/>
+        <owl:inverseOf rdf:resource="#hasLocalClass"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isLocalVariableOf -->
+
+    <owl:ObjectProperty rdf:about="#isLocalVariableOf">
+        <rdfs:domain rdf:resource="#LocalVariable"/>
+        <rdfs:range rdf:resource="#Method"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isMemberOf -->
+
+    <owl:ObjectProperty rdf:about="#isMemberOf">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:comment xml:lang="en"
+            >A member is a nested type that&#39;s directly enclosed within another type declaration</rdfs:comment>
+        <owl:inverseOf rdf:resource="#hasMember"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#NonStaticMemberClass"/>
+                    <rdf:Description rdf:about="#StaticMemberAnnotation"/>
+                    <rdf:Description rdf:about="#StaticMemberClass"/>
+                    <rdf:Description rdf:about="#StaticMemberEnum"/>
+                    <rdf:Description rdf:about="#StaticMemberInterface"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isMethodOf -->
+
+    <owl:ObjectProperty rdf:about="#isMethodOf">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="#Method"/>
+        <owl:inverseOf rdf:resource="#hasMethod"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#ComplexDataType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isPackageMemberOf -->
+
+    <owl:ObjectProperty rdf:about="#isPackageMemberOf">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:range rdf:resource="#Package"/>
+        <owl:inverseOf rdf:resource="#hasPackageMember"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                    <rdf:Description rdf:about="#Package"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isParameterOf -->
+
+    <owl:ObjectProperty rdf:about="#isParameterOf">
+        <rdfs:range rdf:resource="#Method"/>
+        <rdfs:domain rdf:resource="#Parameter"/>
+        <owl:inverseOf rdf:resource="#hasParameter"/>
+        <rdfs:subPropertyOf rdf:resource="#isLocalVariableOf"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isPartOf -->
+
+    <owl:ObjectProperty rdf:about="#isPartOf">
+        <rdfs:comment xml:lang="en"
+            >Inverse of &#39;hasPart&#39; object property. Represents aggregation relationship between objects (Whole-Part or has-a kind of relationships)</rdfs:comment>
+        <rdfs:subPropertyOf rdf:resource="#isUsedBy"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#ComplexDataType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#ComplexDataType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isStaticFieldOf -->
+
+    <owl:ObjectProperty rdf:about="#isStaticFieldOf">
+        <rdfs:domain rdf:resource="#StaticField"/>
+        <owl:inverseOf rdf:resource="#hasStaticField"/>
+        <rdfs:subPropertyOf rdf:resource="#isFieldOf"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isStaticMethodOf -->
+
+    <owl:ObjectProperty rdf:about="#isStaticMethodOf">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="#StaticMethod"/>
+        <owl:inverseOf rdf:resource="#hasStaticMethod"/>
+        <rdfs:subPropertyOf rdf:resource="#isMethodOf"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#isUsedBy -->
+
+    <owl:ObjectProperty rdf:about="#isUsedBy">
+        <rdfs:comment xml:lang="en"
+            >Inverse of &#39;use&#39; relationship</rdfs:comment>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#ComplexDataType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#methodInvokedBy -->
+
+    <owl:ObjectProperty rdf:about="#methodInvokedBy">
+        <rdfs:domain rdf:resource="#Method"/>
+        <rdfs:range rdf:resource="#Method"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#methodOverriddenBy -->
+
+    <owl:ObjectProperty rdf:about="#methodOverriddenBy">
+        <rdfs:domain rdf:resource="#Method"/>
+        <rdfs:range rdf:resource="#Method"/>
+        <owl:inverseOf rdf:resource="#methodOverrides"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#methodOverrides -->
+
+    <owl:ObjectProperty rdf:about="#methodOverrides">
+        <rdfs:domain rdf:resource="#Method"/>
+        <rdfs:range rdf:resource="#Method"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#use -->
+
+    <owl:ObjectProperty rdf:about="#use">
+        <rdfs:comment xml:lang="en"
+            >represents a use relationship between Object Oriented types. It represents the different classes, interfaces, etc. used by a particular type.</rdfs:comment>
+        <owl:inverseOf rdf:resource="#isUsedBy"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnnotationType"/>
+                    <rdf:Description rdf:about="#ClassType"/>
+                    <rdf:Description rdf:about="#ComplexDataType"/>
+                    <rdf:Description rdf:about="#EnumType"/>
+                    <rdf:Description rdf:about="#InterfaceType"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#enclosedWithinMethod -->
+
+    <owl:DatatypeProperty rdf:about="#enclosedWithinMethod">
+        <rdfs:comment xml:lang="en"
+            >Represents the name of the method that emcloses a local or anonymous inner class</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AnonymousClass"/>
+                    <rdf:Description rdf:about="#LocalClass"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasComment -->
+
+    <owl:DatatypeProperty rdf:about="#hasComment">
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasMethodName -->
+
+    <owl:DatatypeProperty rdf:about="#hasMethodName">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:comment xml:lang="en"
+            >This datatype property represents the name of the method.</rdfs:comment>
+        <rdfs:domain rdf:resource="#Method"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasOriginalName -->
+
+    <owl:DatatypeProperty rdf:about="#hasOriginalName">
+        <rdfs:comment xml:lang="en"
+            >The original name of a nested type excluding anonymous classes</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AbstractLocalClass"/>
+                    <rdf:Description rdf:about="#AbstractMemberClass"/>
+                    <rdf:Description rdf:about="#FinalLocalClass"/>
+                    <rdf:Description rdf:about="#FinalMemberClass"/>
+                    <rdf:Description rdf:about="#LocalClass"/>
+                    <rdf:Description rdf:about="#NonStaticMemberClass"/>
+                    <rdf:Description rdf:about="#StaticMemberAnnotation"/>
+                    <rdf:Description rdf:about="#StaticMemberClass"/>
+                    <rdf:Description rdf:about="#StaticMemberEnum"/>
+                    <rdf:Description rdf:about="#StaticMemberInterface"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#hasSignature -->
+
+    <owl:DatatypeProperty rdf:about="#hasSignature">
+        <rdfs:comment xml:lang="en"
+            >Method signature: the method&#39;s name and the parameter types.</rdfs:comment>
+        <rdfs:domain rdf:resource="#Method"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#AbstractClass -->
+
+    <owl:Class rdf:about="#AbstractClass">
+        <rdfs:label xml:lang="en">Abstract Class</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#ClassType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasField"/>
+                <owl:allValuesFrom rdf:resource="#Field"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasAccessControl"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#Package-Private"/>
+                            <rdf:Description rdf:about="#PublicModifier"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasMethod"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AbstractMethod"/>
+                            <rdf:Description rdf:about="#InstanceMethod"/>
+                            <rdf:Description rdf:about="#StaticMethod"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#StaticMemberClass"/>
+        <rdfs:comment xml:lang="en"
+            >Abstract classes are classes that cannot be instantiated</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#AbstractLocalClass -->
+
+    <owl:Class rdf:about="#AbstractLocalClass">
+        <rdfs:label xml:lang="en"
+            >Abstract Local Class</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#AbstractClass"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isLocalClassOf"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#AbstractMemberClass"/>
+        <rdfs:comment xml:lang="en"
+            >A non-member abstract inner class that&#39;s declared within a method or a block in source code</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#AbstractMemberClass -->
+
+    <owl:Class rdf:about="#AbstractMemberClass">
+        <rdfs:label xml:lang="en"
+            >Abstract Member Class</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#AbstractClass"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Class>
+                        <owl:complementOf>
+                            <owl:Class>
+                                <owl:unionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#AbstractLocalClass"/>
+                                    <rdf:Description rdf:about="#AnonymousClass"/>
+                                    <rdf:Description rdf:about="#FinalLocalClass"/>
+                                    <rdf:Description rdf:about="#LocalClass"/>
+                                    <rdf:Description rdf:about="#StaticMemberClass"/>
+                                    <rdf:Description rdf:about="#StaticMemberEnum"/>
+                                    <rdf:Description rdf:about="#StaticMemberInterface"/>
+                                </owl:unionOf>
+                            </owl:Class>
+                        </owl:complementOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#isMemberOf"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:unionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#AnnotationType"/>
+                                    <rdf:Description rdf:about="#ClassType"/>
+                                    <rdf:Description rdf:about="#EnumType"/>
+                                    <rdf:Description rdf:about="#InterfaceType"/>
+                                </owl:unionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >A non-static abstract inner class that&#39;s a member.  It&#39;s directly enclosed in a declaring type</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#AbstractMethod -->
+
+    <owl:Class rdf:about="#AbstractMethod">
+        <rdfs:label xml:lang="en">Abstract Method</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Method"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasOutputType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#DataType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#StaticMethod"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#AccessControl -->
+
+    <owl:Class rdf:about="#AccessControl">
+        <rdfs:label xml:lang="en">Access Control</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <owl:disjointWith rdf:resource="#AnnotationType"/>
+        <owl:disjointWith rdf:resource="#ClassType"/>
+        <owl:disjointWith rdf:resource="#CompilationUnit"/>
+        <owl:disjointWith rdf:resource="#DataType"/>
+        <owl:disjointWith rdf:resource="#EnumType"/>
+        <owl:disjointWith rdf:resource="#Field"/>
+        <owl:disjointWith rdf:resource="#InterfaceType"/>
+        <owl:disjointWith rdf:resource="#LocalVariable"/>
+        <owl:disjointWith rdf:resource="#Method"/>
+        <owl:disjointWith rdf:resource="#Package"/>
+        <owl:disjointWith rdf:resource="#PrimitiveDataType"/>
+        <owl:disjointWith rdf:resource="#Program"/>
+        <rdfs:comment xml:lang="en"
+            >A concept that defines the accessibility level of a field, method, class ,etc.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#AccessModifier -->
+
+    <owl:Class rdf:about="#AccessModifier">
+        <rdfs:label xml:lang="en">Access Modifier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#AccessControl"/>
+        <owl:disjointWith rdf:resource="#Package-Private"/>
+        <rdfs:comment xml:lang="en"
+            >Denotes top-level and member-level accessibility excluding the default accessibility of a member</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#AnnotationType -->
+
+    <owl:Class rdf:about="#AnnotationType">
+        <rdfs:label xml:lang="en">Annotation Type</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasAccessControl"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#Package-Private"/>
+                            <rdf:Description rdf:about="#PrivateModifier"/>
+                            <rdf:Description rdf:about="#PublicModifier"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasMethod"/>
+                <owl:allValuesFrom rdf:resource="#AbstractMethod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isPackageMemberOf"/>
+                <owl:allValuesFrom rdf:resource="#Package"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#ClassType"/>
+        <owl:disjointWith rdf:resource="#CompilationUnit"/>
+        <owl:disjointWith rdf:resource="#EnumType"/>
+        <owl:disjointWith rdf:resource="#Field"/>
+        <owl:disjointWith rdf:resource="#LocalVariable"/>
+        <owl:disjointWith rdf:resource="#Method"/>
+        <owl:disjointWith rdf:resource="#Package"/>
+        <owl:disjointWith rdf:resource="#PrimitiveDataType"/>
+        <owl:disjointWith rdf:resource="#Program"/>
+        <rdfs:comment xml:lang="en"
+            >Represents Annotation Type which provides metadata information about program elements</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#AnonymousClass -->
+
+    <owl:Class rdf:about="#AnonymousClass">
+        <rdfs:label xml:lang="en">Anonymous Class</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#InnerClass"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasAccessControl"/>
+                <owl:allValuesFrom rdf:resource="#Package-Private"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#LocalClass"/>
+        <owl:disjointWith rdf:resource="#NonStaticMemberClass"/>
+        <rdfs:comment xml:lang="en"
+            >A non-member inner class that&#39;s declared within a method or a block in source code. Anonymous classes have no explicit name specified</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#AssignmentStatement -->
+
+    <owl:Class rdf:about="#AssignmentStatement">
+        <rdfs:label xml:lang="en"
+            >Assignment Statement</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#SequenceStructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#ClassType -->
+
+    <owl:Class rdf:about="#ClassType">
+        <rdfs:label xml:lang="en">Class Type</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isPackageMemberOf"/>
+                <owl:allValuesFrom rdf:resource="#Package"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#inherits"/>
+                <owl:allValuesFrom rdf:resource="#ClassType"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#implements"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#inheritedBy"/>
+                <owl:allValuesFrom rdf:resource="#ClassType"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasConstructor"/>
+                <owl:allValuesFrom rdf:resource="#Constructor"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#CompilationUnit"/>
+        <owl:disjointWith rdf:resource="#Field"/>
+        <owl:disjointWith rdf:resource="#InterfaceType"/>
+        <owl:disjointWith rdf:resource="#LocalVariable"/>
+        <owl:disjointWith rdf:resource="#Method"/>
+        <owl:disjointWith rdf:resource="#Package"/>
+        <owl:disjointWith rdf:resource="#PrimitiveDataType"/>
+        <owl:disjointWith rdf:resource="#Program"/>
+        <rdfs:comment xml:lang="en"
+            >ClassType is an ontology concept that represents all kinds of Object Oriented classes in a program.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#CompilationUnit -->
+
+    <owl:Class rdf:about="#CompilationUnit">
+        <rdfs:label xml:lang="en"
+            >Compilation Unit</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#belongsToPackage"/>
+                <owl:allValuesFrom rdf:resource="#Package"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#imports"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                            <rdf:Description rdf:about="#Package"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#containsRefType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#DataType"/>
+        <owl:disjointWith rdf:resource="#EnumType"/>
+        <owl:disjointWith rdf:resource="#Field"/>
+        <owl:disjointWith rdf:resource="#InterfaceType"/>
+        <owl:disjointWith rdf:resource="#LocalVariable"/>
+        <owl:disjointWith rdf:resource="#Method"/>
+        <owl:disjointWith rdf:resource="#Package"/>
+        <owl:disjointWith rdf:resource="#PrimitiveDataType"/>
+        <owl:disjointWith rdf:resource="#Program"/>
+        <rdfs:comment xml:lang="en"
+            >Denotes a single source code file (compilation unit)</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#ComplexDataType -->
+
+    <owl:Class rdf:about="#ComplexDataType">
+        <rdfs:label xml:lang="en"
+            >Complex Data Type</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#DataType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasMethod"/>
+                <owl:allValuesFrom rdf:resource="#Method"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#PrimitiveDataType"/>
+        <rdfs:comment xml:lang="en"
+            >Complex type is a data type whose elements are composed of multiple data items</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#ConcreteClass -->
+
+    <owl:Class rdf:about="#ConcreteClass">
+        <rdfs:label xml:lang="en">Concrete Class</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#ClassType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasAccessControl"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#Package-Private"/>
+                            <rdf:Description rdf:about="#PublicModifier"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasField"/>
+                <owl:allValuesFrom rdf:resource="#Field"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasMethod"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#InstanceMethod"/>
+                            <rdf:Description rdf:about="#StaticMethod"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#StaticMemberClass"/>
+        <rdfs:comment xml:lang="en"
+            >An Object Oriented concrete class is an ontology concept that Models the blueprint from which individual objects are created.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#Constructor -->
+
+    <owl:Class rdf:about="#Constructor">
+        <rdfs:label xml:lang="en"
+            >Class Constructor</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Method"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isConstructorOf"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >Represents a class constructor. A constructoris invoked to create objects from the class blueprint</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#ControlStructure -->
+
+    <owl:Class rdf:about="#ControlStructure">
+        <rdfs:label xml:lang="en"
+            >Control Strucuture</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#DataType -->
+
+    <owl:Class rdf:about="#DataType">
+        <rdfs:label xml:lang="en">Data Type</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isDataTypeOf"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#Field"/>
+                            <rdf:Description rdf:about="#LocalVariable"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#Field"/>
+        <owl:disjointWith rdf:resource="#LocalVariable"/>
+        <owl:disjointWith rdf:resource="#Method"/>
+        <owl:disjointWith rdf:resource="#Package"/>
+        <owl:disjointWith rdf:resource="#Program"/>
+        <rdfs:comment xml:lang="en"
+            >Represents the data type of a particular program element. The data type is a categorization of data elements and their supported operations.
+This hierarchy of data types is adopted from:
+&quot;Object-Oriented Data Structures Using Java&quot; - 2nd Edition, By Nell Dale, Daniel Joyce and Chip Weems.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#DeclarationStatement -->
+
+    <owl:Class rdf:about="#DeclarationStatement">
+        <rdfs:label xml:lang="en"
+            >Declaration Statement</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#SequenceStructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#Do-While-Statement -->
+
+    <owl:Class rdf:about="#Do-While-Statement">
+        <rdfs:label xml:lang="en"
+            >Do-While Statement</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#RepetitionStructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#EnumType -->
+
+    <owl:Class rdf:about="#EnumType">
+        <rdfs:label xml:lang="en">Enum Type</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasAccessControl"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#Package-Private"/>
+                            <rdf:Description rdf:about="#PrivateModifier"/>
+                            <rdf:Description rdf:about="#PublicModifier"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasMethod"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#InstanceMethod"/>
+                            <rdf:Description rdf:about="#StaticMethod"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isPackageMemberOf"/>
+                <owl:allValuesFrom rdf:resource="#Package"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasConstructor"/>
+                <owl:allValuesFrom rdf:resource="#Constructor"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#implements"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasField"/>
+                <owl:allValuesFrom rdf:resource="#Field"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#Field"/>
+        <owl:disjointWith rdf:resource="#InterfaceType"/>
+        <owl:disjointWith rdf:resource="#LocalVariable"/>
+        <owl:disjointWith rdf:resource="#Method"/>
+        <owl:disjointWith rdf:resource="#Package"/>
+        <owl:disjointWith rdf:resource="#PrimitiveDataType"/>
+        <owl:disjointWith rdf:resource="#Program"/>
+        <rdfs:comment xml:lang="en"
+            >Represents a type with fields that consist of a fixed set of constants</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#Field -->
+
+    <owl:Class rdf:about="#Field">
+        <rdfs:label xml:lang="en">Field</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isFieldOf"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasDataType"/>
+                <owl:allValuesFrom rdf:resource="#DataType"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasAccessControl"/>
+                <owl:allValuesFrom rdf:resource="#AccessControl"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#InterfaceType"/>
+        <owl:disjointWith rdf:resource="#LocalVariable"/>
+        <owl:disjointWith rdf:resource="#Method"/>
+        <owl:disjointWith rdf:resource="#Package"/>
+        <owl:disjointWith rdf:resource="#PrimitiveDataType"/>
+        <owl:disjointWith rdf:resource="#Program"/>
+        <rdfs:comment xml:lang="en"
+            >Represents a class field</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#FinalClass -->
+
+    <owl:Class rdf:about="#FinalClass">
+        <rdfs:subClassOf rdf:resource="#ConcreteClass"/>
+        <rdfs:comment xml:lang="en"
+            >represents OO classes that cannot be extended</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#FinalLocalClass -->
+
+    <owl:Class rdf:about="#FinalLocalClass">
+        <rdfs:label xml:lang="en"
+            >Final Local Class</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#FinalClass"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isLocalClassOf"/>
+                <owl:someValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:someValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#FinalMemberClass"/>
+        <rdfs:comment xml:lang="en"
+            >A non-member final inner class that&#39;s declared within a method or a block in source code</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#FinalMemberClass -->
+
+    <owl:Class rdf:about="#FinalMemberClass">
+        <rdfs:label xml:lang="en"
+            >Final Member Class</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#FinalClass"/>
+        <rdfs:subClassOf>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <owl:Class>
+                        <owl:complementOf>
+                            <owl:Class>
+                                <owl:unionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#AbstractLocalClass"/>
+                                    <rdf:Description rdf:about="#AnonymousClass"/>
+                                    <rdf:Description rdf:about="#FinalLocalClass"/>
+                                    <rdf:Description rdf:about="#LocalClass"/>
+                                    <rdf:Description rdf:about="#StaticMemberClass"/>
+                                    <rdf:Description rdf:about="#StaticMemberEnum"/>
+                                    <rdf:Description rdf:about="#StaticMemberInterface"/>
+                                </owl:unionOf>
+                            </owl:Class>
+                        </owl:complementOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#isMemberOf"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:unionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#AnnotationType"/>
+                                    <rdf:Description rdf:about="#ClassType"/>
+                                    <rdf:Description rdf:about="#EnumType"/>
+                                    <rdf:Description rdf:about="#InterfaceType"/>
+                                </owl:unionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >A non-static final inner class that&#39;s a member.  It&#39;s directly enclosed in a declaring type</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#FinalMethod -->
+
+    <owl:Class rdf:about="#FinalMethod">
+        <rdfs:subClassOf rdf:resource="#InstanceMethod"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#ForStatement -->
+
+    <owl:Class rdf:about="#ForStatement">
+        <rdfs:label xml:lang="en">For Statement</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#RepetitionStructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#IfStatement -->
+
+    <owl:Class rdf:about="#IfStatement">
+        <rdfs:label xml:lang="en">If Statement</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#SelectionStructure"/>
+        <rdfs:comment xml:lang="en"
+            >An If statement contains a condition representing a comparison that can be either a reference comparison or a numeric comparison</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#InnerClass -->
+
+    <owl:Class rdf:about="#InnerClass">
+        <rdfs:label xml:lang="en"
+            >A nested class that&#39;s not static</rdfs:label>
+        <rdfs:label xml:lang="en">Inner Class</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#ClassType"/>
+        <owl:disjointWith rdf:resource="#StaticMemberClass"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#InstanceField -->
+
+    <owl:Class rdf:about="#InstanceField">
+        <rdfs:label xml:lang="en">Instance Field</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Field"/>
+        <owl:disjointWith rdf:resource="#StaticField"/>
+        <rdfs:comment xml:lang="en"
+            >Represents instance variables, their values are unique to each instance of a class</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#InstanceMethod -->
+
+    <owl:Class rdf:about="#InstanceMethod">
+        <rdfs:label xml:lang="en">Instance Method</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Method"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasOutputType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#DataType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#StaticMethod"/>
+        <rdfs:comment xml:lang="en"
+            >Represents a non-static method. A non-static method is a method that belongs to every instance of the class.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#InterfaceType -->
+
+    <owl:Class rdf:about="#InterfaceType">
+        <rdfs:label xml:lang="en">Interface Type</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#inherits"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isPackageMemberOf"/>
+                <owl:allValuesFrom rdf:resource="#Package"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasAccessControl"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#Package-Private"/>
+                            <rdf:Description rdf:about="#PrivateModifier"/>
+                            <rdf:Description rdf:about="#PublicModifier"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#implementedBy"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasField"/>
+                <owl:allValuesFrom rdf:resource="#StaticField"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#inheritedBy"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasMethod"/>
+                <owl:allValuesFrom rdf:resource="#AbstractMethod"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#LocalVariable"/>
+        <owl:disjointWith rdf:resource="#Method"/>
+        <owl:disjointWith rdf:resource="#Package"/>
+        <owl:disjointWith rdf:resource="#PrimitiveDataType"/>
+        <owl:disjointWith rdf:resource="#Program"/>
+        <rdfs:comment xml:lang="en"
+            >A concept that represents an interface which is a reference type that can contain only constants, method signatures, and nested types</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#LocalClass -->
+
+    <owl:Class rdf:about="#LocalClass">
+        <rdfs:label xml:lang="en">Local Class</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#InnerClass"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#isLocalClassOf"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:unionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#AnnotationType"/>
+                                    <rdf:Description rdf:about="#ClassType"/>
+                                    <rdf:Description rdf:about="#EnumType"/>
+                                    <rdf:Description rdf:about="#InterfaceType"/>
+                                </owl:unionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#InnerClass"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasAccessControl"/>
+                <owl:allValuesFrom rdf:resource="#Package-Private"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isLocalClassOf"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#NonStaticMemberClass"/>
+        <rdfs:comment xml:lang="en"
+            >A non-member inner class that&#39;s declared within a method or a block in source code</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#LocalVariable -->
+
+    <owl:Class rdf:about="#LocalVariable">
+        <rdfs:label xml:lang="en">Local Variable</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasDataType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#DataType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#Method"/>
+        <owl:disjointWith rdf:resource="#Package"/>
+        <owl:disjointWith rdf:resource="#PrimitiveDataType"/>
+        <owl:disjointWith rdf:resource="#Program"/>
+        <rdfs:comment xml:lang="en"
+            >A variable declared within a method</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#Method -->
+
+    <owl:Class rdf:about="#Method">
+        <rdfs:label xml:lang="en">Method</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasInputType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#DataType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasAccessControl"/>
+                <owl:allValuesFrom rdf:resource="#AccessControl"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasParameter"/>
+                <owl:allValuesFrom rdf:resource="#Parameter"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasLocalVariable"/>
+                <owl:allValuesFrom rdf:resource="#LocalVariable"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#containsSelection"/>
+                <owl:allValuesFrom rdf:resource="#SelectionStructure"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#Package"/>
+        <owl:disjointWith rdf:resource="#PrimitiveDataType"/>
+        <owl:disjointWith rdf:resource="#Program"/>
+        <rdfs:comment xml:lang="en"
+            >represents a method that may belong to a class or interface</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#NonStaticMemberClass -->
+
+    <owl:Class rdf:about="#NonStaticMemberClass">
+        <rdfs:label xml:lang="en"
+            >Non-Static Member Class</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#InnerClass"/>
+                    <owl:Class>
+                        <owl:complementOf>
+                            <owl:Class>
+                                <owl:unionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#AbstractLocalClass"/>
+                                    <rdf:Description rdf:about="#AnonymousClass"/>
+                                    <rdf:Description rdf:about="#FinalLocalClass"/>
+                                    <rdf:Description rdf:about="#LocalClass"/>
+                                    <rdf:Description rdf:about="#StaticMemberClass"/>
+                                    <rdf:Description rdf:about="#StaticMemberEnum"/>
+                                    <rdf:Description rdf:about="#StaticMemberInterface"/>
+                                </owl:unionOf>
+                            </owl:Class>
+                        </owl:complementOf>
+                    </owl:Class>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#isMemberOf"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:unionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="#AnnotationType"/>
+                                    <rdf:Description rdf:about="#ClassType"/>
+                                    <rdf:Description rdf:about="#EnumType"/>
+                                    <rdf:Description rdf:about="#InterfaceType"/>
+                                </owl:unionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#InnerClass"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isMemberOf"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasAccessControl"/>
+                <owl:allValuesFrom rdf:resource="#AccessControl"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >A non-static inner class that&#39;s a member.  It&#39;s directly enclosed in a declaring type</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#Package -->
+
+    <owl:Class rdf:about="#Package">
+        <rdfs:label xml:lang="en">Package</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasPackageMember"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                            <rdf:Description rdf:about="#Package"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#PrimitiveDataType"/>
+        <owl:disjointWith rdf:resource="#Program"/>
+        <rdfs:comment xml:lang="en"
+            >This concept represents a package, that is a grouping of related types (Classes, Enums, Annotations, and Interfaces)</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#Package-Private -->
+
+    <owl:Class rdf:about="#Package-Private">
+        <rdfs:label xml:lang="en">default</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AccessControl"/>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#default"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#AccessControl"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isAccessControlOf"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#Field"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                            <rdf:Description rdf:about="#Method"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >Denotes default accessibility (No explicit access modifier present)</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#Parameter -->
+
+    <owl:Class rdf:about="#Parameter">
+        <rdfs:label xml:lang="en">Parameter</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#LocalVariable"/>
+        <rdfs:comment xml:lang="en"
+            >Represents a method&#39;s formal parameter</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#PrimitiveDataType -->
+
+    <owl:Class rdf:about="#PrimitiveDataType">
+        <rdfs:label xml:lang="en"
+            >Primitive Data Type</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#DataType"/>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#byte"/>
+                            <rdf:Description rdf:about="#boolean"/>
+                            <rdf:Description rdf:about="#char"/>
+                            <rdf:Description rdf:about="#float"/>
+                            <rdf:Description rdf:about="#double"/>
+                            <rdf:Description rdf:about="#long"/>
+                            <rdf:Description rdf:about="#short"/>
+                            <rdf:Description rdf:about="#int"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#DataType"/>
+        <owl:disjointWith rdf:resource="#Program"/>
+        <rdfs:comment xml:lang="en"
+            >primitive data type is a data type whose elements are single, nondecomposable data items. it consists of the the different atomic data types supported by an OO programming language.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#PrivateModifier -->
+
+    <owl:Class rdf:about="#PrivateModifier">
+        <rdfs:label xml:lang="en"
+            >Private Modifier</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AccessModifier"/>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#private"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#AccessModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isAccessControlOf"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#Field"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                            <rdf:Description rdf:about="#Method"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#ProtectedModifier"/>
+        <owl:disjointWith rdf:resource="#PublicModifier"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#Program -->
+
+    <owl:Class rdf:about="#Program">
+        <rdfs:label xml:lang="en">Program</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&owl;Thing"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="#hasCompilationUnit"/>
+                        <owl:someValuesFrom rdf:resource="#CompilationUnit"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasCompilationUnit"/>
+                <owl:allValuesFrom rdf:resource="#CompilationUnit"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >Represents a Java Program which usually consists of one or more compilation units</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#ProtectedModifier -->
+
+    <owl:Class rdf:about="#ProtectedModifier">
+        <rdfs:label xml:lang="en"
+            >Protected Modifier</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AccessModifier"/>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#protected"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#AccessModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isAccessControlOf"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#Field"/>
+                            <rdf:Description rdf:about="#Method"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="#PublicModifier"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#PublicModifier -->
+
+    <owl:Class rdf:about="#PublicModifier">
+        <rdfs:label xml:lang="en">Public Modifier</rdfs:label>
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="#AccessModifier"/>
+                    <owl:Class>
+                        <owl:oneOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#public"/>
+                        </owl:oneOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="#AccessModifier"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#isAccessControlOf"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#Field"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                            <rdf:Description rdf:about="#Method"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#RepetitionStructure -->
+
+    <owl:Class rdf:about="#RepetitionStructure">
+        <rdfs:label xml:lang="en"
+            >Repetition Structure</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#ControlStructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#SelectionStructure -->
+
+    <owl:Class rdf:about="#SelectionStructure">
+        <rdfs:label xml:lang="en"
+            >Selection Structure</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#ControlStructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#SequenceStructure -->
+
+    <owl:Class rdf:about="#SequenceStructure">
+        <rdfs:label xml:lang="en"
+            >Sequence Structure</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#ControlStructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#StaticField -->
+
+    <owl:Class rdf:about="#StaticField">
+        <rdfs:label xml:lang="en">Static Field</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Field"/>
+        <rdfs:comment xml:lang="en"
+            >Represents a class variable</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#StaticMemberAnnotation -->
+
+    <owl:Class rdf:about="#StaticMemberAnnotation">
+        <rdfs:label xml:lang="en"
+            >Static Member Annotation</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#AnnotationType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasAccessControl"/>
+                <owl:allValuesFrom rdf:resource="#AccessControl"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >A static nested Annotation type that&#39;s a member and  It&#39;s directly enclosed in a declaring type</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#StaticMemberClass -->
+
+    <owl:Class rdf:about="#StaticMemberClass">
+        <rdfs:label xml:lang="en"
+            >Static Member Class</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#ClassType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasAccessControl"/>
+                <owl:allValuesFrom rdf:resource="#AccessControl"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >A static nested class that&#39;s a member which is directly enclosed in a declaring type</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#StaticMemberEnum -->
+
+    <owl:Class rdf:about="#StaticMemberEnum">
+        <rdfs:label xml:lang="en"
+            >Static Member Enum</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#EnumType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasAccessControl"/>
+                <owl:allValuesFrom rdf:resource="#AccessControl"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >A static nested enum type that&#39;s a member and  It&#39;s directly enclosed in a declaring type</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#StaticMemberInterface -->
+
+    <owl:Class rdf:about="#StaticMemberInterface">
+        <rdfs:label xml:lang="en"
+            >Static Member Interface</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#InterfaceType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasAccessControl"/>
+                <owl:allValuesFrom rdf:resource="#AccessControl"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >A static nested Interface type that&#39;s a member and  It&#39;s directly enclosed in a declaring type</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#StaticMethod -->
+
+    <owl:Class rdf:about="#StaticMethod">
+        <rdfs:label xml:lang="en">Static Method</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#Method"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="#hasOutputType"/>
+                <owl:allValuesFrom>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <rdf:Description rdf:about="#AnnotationType"/>
+                            <rdf:Description rdf:about="#ClassType"/>
+                            <rdf:Description rdf:about="#DataType"/>
+                            <rdf:Description rdf:about="#EnumType"/>
+                            <rdf:Description rdf:about="#InterfaceType"/>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:allValuesFrom>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment xml:lang="en"
+            >Represents a static method. A static method is a method that belongs to the class and not to any instance of the class.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#StructuredDataType -->
+
+    <owl:Class rdf:about="#StructuredDataType">
+        <rdfs:label xml:lang="en"
+            >Strucutured Data Type</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#ComplexDataType"/>
+        <rdfs:comment xml:lang="en"
+            >Structured composite type is an organized collection of components in which the organization determines the means of accessing individual data components or subsets of the collection. This includes arrays and Java Collections</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#SwitchStatement -->
+
+    <owl:Class rdf:about="#SwitchStatement">
+        <rdfs:label xml:lang="en"
+            >Switch Statement</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#SelectionStructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#UnstructuredDataType -->
+
+    <owl:Class rdf:about="#UnstructuredDataType">
+        <rdfs:label xml:lang="en"
+            >Unstrucutred Data Type</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#ComplexDataType"/>
+        <rdfs:comment xml:lang="en"
+            >Unstructured type represents a data type of an element that&#39;s either a ClassType or an Interface type.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#WhileStatement -->
+
+    <owl:Class rdf:about="#WhileStatement">
+        <rdfs:label xml:lang="en">While Statement</rdfs:label>
+        <rdfs:subClassOf rdf:resource="#RepetitionStructure"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <owl:Class rdf:about="&owl;Thing">
+        <dc:language xml:lang="en"
+            >The class Thing is the class that represents the set containing all individuals. All other classes in the ontology are subclasses of this class.</dc:language>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#array -->
+
+    <owl:Thing rdf:about="#array">
+        <rdf:type rdf:resource="#StructuredDataType"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#boolean -->
+
+    <owl:Thing rdf:about="#boolean">
+        <rdf:type rdf:resource="#PrimitiveDataType"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#byte -->
+
+    <PrimitiveDataType rdf:about="#byte">
+        <rdf:type rdf:resource="&owl;Thing"/>
+    </PrimitiveDataType>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#char -->
+
+    <PrimitiveDataType rdf:about="#char">
+        <rdf:type rdf:resource="&owl;Thing"/>
+    </PrimitiveDataType>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#default -->
+
+    <Package-Private rdf:about="#default">
+        <rdf:type rdf:resource="&owl;Thing"/>
+    </Package-Private>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#double -->
+
+    <owl:Thing rdf:about="#double">
+        <rdf:type rdf:resource="#PrimitiveDataType"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#float -->
+
+    <owl:Thing rdf:about="#float">
+        <rdf:type rdf:resource="#PrimitiveDataType"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#int -->
+
+    <owl:Thing rdf:about="#int">
+        <rdf:type rdf:resource="#PrimitiveDataType"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#java.lang.String -->
+
+    <UnstructuredDataType rdf:about="#java.lang.String">
+        <rdf:type rdf:resource="&owl;Thing"/>
+    </UnstructuredDataType>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#long -->
+
+    <PrimitiveDataType rdf:about="#long">
+        <rdf:type rdf:resource="&owl;Thing"/>
+    </PrimitiveDataType>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#numericComparison -->
+
+    <IfStatement rdf:about="#numericComparison">
+        <rdf:type rdf:resource="&owl;Thing"/>
+    </IfStatement>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#private -->
+
+    <owl:Thing rdf:about="#private">
+        <rdf:type rdf:resource="#PrivateModifier"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#protected -->
+
+    <owl:Thing rdf:about="#protected">
+        <rdf:type rdf:resource="#ProtectedModifier"/>
+    </owl:Thing>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#public -->
+
+    <PublicModifier rdf:about="#public">
+        <rdf:type rdf:resource="&owl;Thing"/>
+    </PublicModifier>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#refComparison -->
+
+    <IfStatement rdf:about="#refComparison">
+        <rdf:type rdf:resource="&owl;Thing"/>
+    </IfStatement>
+    
+
+
+    <!-- http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#short -->
+
+    <owl:Thing rdf:about="#short">
+        <rdf:type rdf:resource="#PrimitiveDataType"/>
+    </owl:Thing>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#double"/>
+            <rdf:Description rdf:about="#long"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#int"/>
+            <rdf:Description rdf:about="#protected"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#boolean"/>
+            <rdf:Description rdf:about="#float"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#long"/>
+            <rdf:Description rdf:about="#protected"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#java.lang.String"/>
+            <rdf:Description rdf:about="#char"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#public"/>
+            <rdf:Description rdf:about="#long"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#byte"/>
+            <rdf:Description rdf:about="#default"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#public"/>
+            <rdf:Description rdf:about="#float"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#char"/>
+            <rdf:Description rdf:about="#float"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#double"/>
+            <rdf:Description rdf:about="#private"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#public"/>
+            <rdf:Description rdf:about="#char"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#float"/>
+            <rdf:Description rdf:about="#short"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#float"/>
+            <rdf:Description rdf:about="#protected"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#boolean"/>
+            <rdf:Description rdf:about="#long"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#public"/>
+            <rdf:Description rdf:about="#protected"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#public"/>
+            <rdf:Description rdf:about="#double"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#java.lang.String"/>
+            <rdf:Description rdf:about="#default"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#char"/>
+            <rdf:Description rdf:about="#int"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#java.lang.String"/>
+            <rdf:Description rdf:about="#short"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#boolean"/>
+            <rdf:Description rdf:about="#short"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#char"/>
+            <rdf:Description rdf:about="#protected"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#byte"/>
+            <rdf:Description rdf:about="#long"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#boolean"/>
+            <rdf:Description rdf:about="#protected"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#private"/>
+            <rdf:Description rdf:about="#protected"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#boolean"/>
+            <rdf:Description rdf:about="#int"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#float"/>
+            <rdf:Description rdf:about="#long"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#byte"/>
+            <rdf:Description rdf:about="#short"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#default"/>
+            <rdf:Description rdf:about="#int"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#boolean"/>
+            <rdf:Description rdf:about="#double"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#long"/>
+            <rdf:Description rdf:about="#int"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#java.lang.String"/>
+            <rdf:Description rdf:about="#private"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#long"/>
+            <rdf:Description rdf:about="#short"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#byte"/>
+            <rdf:Description rdf:about="#public"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#public"/>
+            <rdf:Description rdf:about="#int"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#boolean"/>
+            <rdf:Description rdf:about="#char"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#java.lang.String"/>
+            <rdf:Description rdf:about="#float"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#float"/>
+            <rdf:Description rdf:about="#int"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#boolean"/>
+            <rdf:Description rdf:about="#private"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#java.lang.String"/>
+            <rdf:Description rdf:about="#long"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#double"/>
+            <rdf:Description rdf:about="#protected"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#java.lang.String"/>
+            <rdf:Description rdf:about="#public"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#public"/>
+            <rdf:Description rdf:about="#short"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#public"/>
+            <rdf:Description rdf:about="#private"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#byte"/>
+            <rdf:Description rdf:about="#double"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#short"/>
+            <rdf:Description rdf:about="#protected"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#byte"/>
+            <rdf:Description rdf:about="#protected"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#double"/>
+            <rdf:Description rdf:about="#int"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#byte"/>
+            <rdf:Description rdf:about="#char"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#byte"/>
+            <rdf:Description rdf:about="#boolean"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#public"/>
+            <rdf:Description rdf:about="#boolean"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#long"/>
+            <rdf:Description rdf:about="#default"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#short"/>
+            <rdf:Description rdf:about="#default"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#float"/>
+            <rdf:Description rdf:about="#double"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#private"/>
+            <rdf:Description rdf:about="#default"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#double"/>
+            <rdf:Description rdf:about="#short"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#short"/>
+            <rdf:Description rdf:about="#int"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#char"/>
+            <rdf:Description rdf:about="#short"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#char"/>
+            <rdf:Description rdf:about="#default"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#java.lang.String"/>
+            <rdf:Description rdf:about="#int"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#boolean"/>
+            <rdf:Description rdf:about="#default"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#java.lang.String"/>
+            <rdf:Description rdf:about="#double"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#default"/>
+            <rdf:Description rdf:about="#protected"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#char"/>
+            <rdf:Description rdf:about="#double"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#public"/>
+            <rdf:Description rdf:about="#default"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#byte"/>
+            <rdf:Description rdf:about="#float"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#double"/>
+            <rdf:Description rdf:about="#default"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#float"/>
+            <rdf:Description rdf:about="#private"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#java.lang.String"/>
+            <rdf:Description rdf:about="#boolean"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#byte"/>
+            <rdf:Description rdf:about="#private"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#byte"/>
+            <rdf:Description rdf:about="#int"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#private"/>
+            <rdf:Description rdf:about="#int"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#char"/>
+            <rdf:Description rdf:about="#long"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#float"/>
+            <rdf:Description rdf:about="#default"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#private"/>
+            <rdf:Description rdf:about="#short"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#char"/>
+            <rdf:Description rdf:about="#private"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#byte"/>
+            <rdf:Description rdf:about="#java.lang.String"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#java.lang.String"/>
+            <rdf:Description rdf:about="#protected"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="&owl;AllDifferent"/>
+        <owl:distinctMembers rdf:parseType="Collection">
+            <rdf:Description rdf:about="#long"/>
+            <rdf:Description rdf:about="#private"/>
+        </owl:distinctMembers>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 2.2.1.1138) http://owlapi.sourceforge.net -->
+
