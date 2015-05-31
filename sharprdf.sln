@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GettingStarted", "GettingSt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GS.SyntaxTree", "GS.SyntaxTree\GS.SyntaxTree.csproj", "{348F4471-DB15-4696-BC71-3B0C3B016421}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharprdf.Core", "Sharprdf.Core\Sharprdf.Core.csproj", "{B0C0BCAF-5D9D-4D13-954F-D2E52A9489D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharprdf.Core.Tests", "Sharprdf.Core.Tests\Sharprdf.Core.Tests.csproj", "{8DD7941B-9FB1-4FE5-AD4F-CEB859438276}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,6 +22,7 @@ Global
 		{348F4471-DB15-4696-BC71-3B0C3B016421}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{348F4471-DB15-4696-BC71-3B0C3B016421}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
