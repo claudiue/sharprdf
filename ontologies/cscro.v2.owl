@@ -228,10 +228,11 @@ This ontology is created to explicitly represent the conceptual knowledge struct
     
 
 
-    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasNamespaceMember -->
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasNamespace -->
 
-    <owl:ObjectProperty rdf:about="&cscro;hasNamespaceMember">
-        <owl:inverseOf rdf:resource="&cscro;isNamespaceMemberOf"/>
+    <owl:ObjectProperty rdf:about="&cscro;hasNamespace">
+        <rdfs:range rdf:resource="&cscro;Namespace"/>
+        <owl:inverseOf rdf:resource="&cscro;isNamespaceOf"/>
         <rdfs:domain>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
@@ -240,14 +241,6 @@ This ontology is created to explicitly represent the conceptual knowledge struct
                 </owl:unionOf>
             </owl:Class>
         </rdfs:domain>
-        <rdfs:range>
-            <owl:Class>
-                <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&cscro;DataType"/>
-                    <rdf:Description rdf:about="&cscro;Namespace"/>
-                </owl:unionOf>
-            </owl:Class>
-        </rdfs:range>
     </owl:ObjectProperty>
     
 
@@ -414,17 +407,10 @@ This ontology is created to explicitly represent the conceptual knowledge struct
     
 
 
-    <!-- http://www.sharprdf.net/ontologies/cscro.owl#isNamespaceMemberOf -->
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#isNamespaceOf -->
 
-    <owl:ObjectProperty rdf:about="&cscro;isNamespaceMemberOf">
-        <rdfs:domain>
-            <owl:Class>
-                <owl:unionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&cscro;DataType"/>
-                    <rdf:Description rdf:about="&cscro;Namespace"/>
-                </owl:unionOf>
-            </owl:Class>
-        </rdfs:domain>
+    <owl:ObjectProperty rdf:about="&cscro;isNamespaceOf">
+        <rdfs:domain rdf:resource="&cscro;Namespace"/>
         <rdfs:range>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
