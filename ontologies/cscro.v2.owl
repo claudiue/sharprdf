@@ -530,6 +530,7 @@ This ontology is created to explicitly represent the conceptual knowledge struct
         <rdfs:domain>
             <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;Attribute"/>
                     <rdf:Description rdf:about="&cscro;CompilationUnit"/>
                     <rdf:Description rdf:about="&cscro;Namespace"/>
                 </owl:unionOf>

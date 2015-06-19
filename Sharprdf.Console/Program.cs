@@ -119,9 +119,11 @@ public abstract class Ta:Attribute { }
 public struct Tx { int x; }
 
 public enum Ex { a, b, c }
+[Serializable]
 public delegate void Test();
 public interface InterTest { }
 public static class A { }
+[Serializable]
 public sealed class B { }
 
 namespace RoslynConsoleApp
@@ -142,6 +144,7 @@ namespace RoslynConsoleApp
         delegate void TestDeleg();
         enum EEnum { a, b, c }
         interface ITest { }
+        [Serializable]
         struct SStruct { }
 
         //class declarations

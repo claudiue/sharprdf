@@ -58,6 +58,7 @@ namespace Sharprdf.Core
             var rdfType = g.CreateUriNode("rdf:type");
             var rdfsLabel = g.CreateUriNode("rdfs:label");
             var cscroCompilationUnit = g.CreateUriNode("cscro:CompilationUnit");
+            var cscroHasName = g.CreateUriNode("cscro:hasName");
 
             IUriNode rootUriNode = null;
             switch (root.RawKind)
@@ -66,7 +67,8 @@ namespace Sharprdf.Core
                     var compilationUnit = (CompilationUnitSyntax)root;
                     rootUriNode = g.CreateUriNode(string.Format(":cu_{0}", compilationUnit.GetHashCode()));
                     g.Assert(new Triple(rootUriNode, rdfType, cscroCompilationUnit));
-                    g.Assert(new Triple(rootUriNode, rdfsLabel, g.CreateLiteralNode(fileName, "en")));
+                    g.Assert(new Triple(rootUriNode, rdfsLabel, g.CreateLiteralNode(string.Format("compilation unit {0}", fileName), "en")));
+                    g.Assert(new Triple(rootUriNode, cscroHasName, g.CreateLiteralNode(fileName, "en")));
                     break;
                 // The following will probably not be used:
                 //case (int)SyntaxKind.UsingDirective:
@@ -117,6 +119,9 @@ namespace Sharprdf.Core
             var cscroIsMemberOf = g.CreateUriNode("cscro:isMemberOf");
             var cscroHasAttribute = g.CreateUriNode("cscro:hasAttribute");
             var cscroIsAttributeOf = g.CreateUriNode("cscro:isAttributeOf");
+            var cscroHasName = g.CreateUriNode("cscro:hasName");
+            var cscroHasIdentifier = g.CreateUriNode("cscro:hasIdentifier");
+
 
 
             foreach (var child in node.ChildNodes())
@@ -131,57 +136,64 @@ namespace Sharprdf.Core
                         var usingDir = (UsingDirectiveSyntax)child;
                         childUriNode = g.CreateUriNode(string.Format(":ns_{0}", usingDir.GetHashCode()));
                         g.Assert(new Triple(childUriNode, rdfType, cscroNamespace));
-                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(usingDir.Name.ToFullString(), "en")));
+                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(string.Format("namespace {0}", usingDir.Name.ToFullString()), "en")));
                         g.Assert(new Triple(childUriNode, cscroIsUsedBy, uriNode));
                         g.Assert(new Triple(uriNode, cscroUses, childUriNode));
+                        g.Assert(new Triple(childUriNode, cscroHasName, g.CreateLiteralNode(usingDir.Name.ToFullString(), "en")));
                         break;
                     case (int)SyntaxKind.NamespaceDeclaration:
                         var namspaceDecl = (NamespaceDeclarationSyntax)child;
                         childUriNode = g.CreateUriNode(string.Format(":ns_{0}", namspaceDecl.GetHashCode()));
                         g.Assert(new Triple(childUriNode, rdfType, cscroNamespace));
-                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(namspaceDecl.Name.ToFullString(), "en")));
+                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(string.Format("namespace {0}", namspaceDecl.Name.ToFullString()), "en")));
                         g.Assert(new Triple(childUriNode, cscroIsNamespaceOf, uriNode));
                         g.Assert(new Triple(uriNode, cscroHasNamespace, childUriNode));
+                        g.Assert(new Triple(childUriNode, cscroHasName, g.CreateLiteralNode(namspaceDecl.Name.ToFullString(), "en")));
                         break;
                     case (int)SyntaxKind.DelegateDeclaration:
                         var delegateDecl = (DelegateDeclarationSyntax)child;
                         childUriNode = g.CreateUriNode(string.Format(":delegate_{0}", delegateDecl.GetHashCode()));
                         g.Assert(new Triple(childUriNode, rdfType, cscroDelegate));
-                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(delegateDecl.Identifier.ToFullString(), "en")));
+                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(string.Format("delegate {0}", delegateDecl.Identifier.ToFullString()), "en")));
                         g.Assert(new Triple(childUriNode, cscroIsDataTypeOf, uriNode));
                         g.Assert(new Triple(uriNode, cscroHasDataType, childUriNode));
+                        g.Assert(new Triple(childUriNode, cscroHasIdentifier, g.CreateLiteralNode(delegateDecl.Identifier.ToFullString(), "en")));
                         break;
                     case (int)SyntaxKind.EnumDeclaration:
                         var enumDecl = (EnumDeclarationSyntax)child;
                         childUriNode = g.CreateUriNode(string.Format(":enum_{0}", enumDecl.GetHashCode()));
                         g.Assert(new Triple(childUriNode, rdfType, cscroEnum));
-                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(enumDecl.Identifier.ToFullString(), "en")));
+                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(string.Format("enum {0}", enumDecl.Identifier.ToFullString()), "en")));
                         g.Assert(new Triple(childUriNode, cscroIsDataTypeOf, uriNode));
                         g.Assert(new Triple(uriNode, cscroHasDataType, childUriNode));
+                        g.Assert(new Triple(childUriNode, cscroHasIdentifier, g.CreateLiteralNode(enumDecl.Identifier.ToFullString(), "en")));
                         break;
                     case (int)SyntaxKind.InterfaceDeclaration:
                         var interfaceDecl = (InterfaceDeclarationSyntax)child;
                         childUriNode = g.CreateUriNode(string.Format(":interface_{0}", interfaceDecl.GetHashCode()));
                         g.Assert(new Triple(childUriNode, rdfType, cscroInterface));
-                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(interfaceDecl.Identifier.ToFullString(), "en")));
+                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(string.Format("interface {0}", interfaceDecl.Identifier.ToFullString()), "en")));
                         g.Assert(new Triple(childUriNode, cscroIsDataTypeOf, uriNode));
                         g.Assert(new Triple(uriNode, cscroHasDataType, childUriNode));
+                        g.Assert(new Triple(childUriNode, cscroHasIdentifier, g.CreateLiteralNode(interfaceDecl.Identifier.ToFullString(), "en")));
                         break;
                     case (int)SyntaxKind.StructDeclaration:
                         var structDecl = (StructDeclarationSyntax)child;
                         childUriNode = g.CreateUriNode(string.Format(":struct_{0}", structDecl.GetHashCode()));
                         g.Assert(new Triple(childUriNode, rdfType, cscroStruct));
-                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(structDecl.Identifier.ToFullString(), "en")));
+                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(string.Format("struct {0}", structDecl.Identifier.ToFullString()), "en")));
                         g.Assert(new Triple(childUriNode, cscroIsDataTypeOf, uriNode));
                         g.Assert(new Triple(uriNode, cscroHasDataType, childUriNode));
+                        g.Assert(new Triple(childUriNode, cscroHasIdentifier, g.CreateLiteralNode(structDecl.Identifier.ToFullString(), "en")));
                         break;
                     case (int)SyntaxKind.ClassDeclaration:
                         var classDecl = (ClassDeclarationSyntax)child;
                         childUriNode = g.CreateUriNode(string.Format(":class_{0}", classDecl.GetHashCode()));
                         g.Assert(new Triple(childUriNode, rdfType, cscroClass));
-                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(classDecl.Identifier.ToFullString(), "en")));
+                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(string.Format("class {0}", classDecl.Identifier.ToFullString()), "en")));
                         g.Assert(new Triple(childUriNode, cscroIsDataTypeOf, uriNode));
                         g.Assert(new Triple(uriNode, cscroHasDataType, childUriNode));
+                        g.Assert(new Triple(childUriNode, cscroHasIdentifier, g.CreateLiteralNode(classDecl.Identifier.ToFullString(), "en")));
                         break;
                     case (int)SyntaxKind.FieldDeclaration:
                         break;
@@ -195,9 +207,10 @@ namespace Sharprdf.Core
                         {
                             childUriNode = g.CreateUriNode(string.Format(":attribute_{0}", attribute.GetHashCode()));
                             g.Assert(new Triple(childUriNode, rdfType, cscroAttribute));
-                            g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(attribute.Name.ToFullString(), "en")));
+                            g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(string.Format("attribute {0}", attribute.Name.ToFullString()), "en")));
                             g.Assert(new Triple(childUriNode, cscroIsAttributeOf, uriNode));
                             g.Assert(new Triple(uriNode, cscroHasAttribute, childUriNode));
+                            g.Assert(new Triple(childUriNode, cscroHasName, g.CreateLiteralNode(attribute.Name.ToFullString(), "en")));
                         }
                         break;
                 }
