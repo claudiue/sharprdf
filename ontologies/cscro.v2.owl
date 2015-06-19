@@ -1,0 +1,1080 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY owl2 "http://www.w3.org/2006/12/owl2#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY owl2xml "http://www.w3.org/2006/12/owl2-xml#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY cscro "http://www.sharprdf.net/ontologies/cscro.owl#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.sharprdf.net/ontologies/cscro.owl#"
+     xml:base="http://www.sharprdf.net/ontologies/cscro.owl"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:owl2xml="http://www.w3.org/2006/12/owl2-xml#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:cscro="http://www.sharprdf.net/ontologies/cscro.owl#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl2="http://www.w3.org/2006/12/owl2#"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <owl:Ontology rdf:about="http://www.sharprdf.net/ontologies/cscro.owl#">
+        <owl:versionInfo xml:lang="en">1.0</owl:versionInfo>
+        <dc:creator xml:lang="en">Claudiu Epure</dc:creator>
+        <rdfs:comment xml:lang="en">The C# Source Code Representation Ontology (CSCRO).
+
+This ontology extends the SCRO ontology (http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl#)
+by adding and modifying Entities according to C# programming language.
+
+This ontology is created to explicitly represent the conceptual knowledge structure in object-oriented C# source code.</rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/creator -->
+
+    <owl:AnnotationProperty rdf:about="&dc;creator"/>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/date -->
+
+    <owl:AnnotationProperty rdf:about="&dc;date"/>
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/language -->
+
+    <owl:AnnotationProperty rdf:about="&dc;language"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasAccessModifier -->
+
+    <owl:ObjectProperty rdf:about="&cscro;hasAccessModifier">
+        <rdfs:range rdf:resource="&cscro;AccessModifier"/>
+        <owl:inverseOf rdf:resource="&cscro;isAccessModifierOf"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;DataType"/>
+                    <rdf:Description rdf:about="&cscro;Member"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasAttribute -->
+
+    <owl:ObjectProperty rdf:about="&cscro;hasAttribute">
+        <rdfs:range rdf:resource="&cscro;Attribute"/>
+        <owl:inverseOf rdf:resource="&cscro;isAttributeOf"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;DataType"/>
+                    <rdf:Description rdf:about="&cscro;Member"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasCompilationUnit -->
+
+    <owl:ObjectProperty rdf:about="&cscro;hasCompilationUnit">
+        <rdfs:comment xml:lang="en">Relates a program to it&apos;s compilation units</rdfs:comment>
+        <rdfs:range rdf:resource="&cscro;CompilationUnit"/>
+        <rdfs:domain rdf:resource="&cscro;Program"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasConstructor -->
+
+    <owl:ObjectProperty rdf:about="&cscro;hasConstructor">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:range rdf:resource="&cscro;Constructor"/>
+        <rdfs:subPropertyOf rdf:resource="&cscro;hasMember"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;Class"/>
+                    <rdf:Description rdf:about="&cscro;Struct"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasDataType -->
+
+    <owl:ObjectProperty rdf:about="&cscro;hasDataType">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:comment xml:lang="en">represents the a field or a local variable&apos;s data type</rdfs:comment>
+        <rdfs:range rdf:resource="&cscro;DataType"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;Class"/>
+                    <rdf:Description rdf:about="&cscro;CompilationUnit"/>
+                    <rdf:Description rdf:about="&cscro;Namespace"/>
+                    <rdf:Description rdf:about="&cscro;Struct"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasField -->
+
+    <owl:ObjectProperty rdf:about="&cscro;hasField">
+        <rdfs:range rdf:resource="&cscro;Field"/>
+        <rdfs:subPropertyOf rdf:resource="&cscro;hasMember"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;Class"/>
+                    <rdf:Description rdf:about="&cscro;Struct"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasMember -->
+
+    <owl:ObjectProperty rdf:about="&cscro;hasMember">
+        <rdfs:range rdf:resource="&cscro;Member"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;Class"/>
+                    <rdf:Description rdf:about="&cscro;Interface"/>
+                    <rdf:Description rdf:about="&cscro;Struct"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasMethod -->
+
+    <owl:ObjectProperty rdf:about="&cscro;hasMethod">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:range rdf:resource="&cscro;Method"/>
+        <rdfs:subPropertyOf rdf:resource="&cscro;hasMember"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;Class"/>
+                    <rdf:Description rdf:about="&cscro;Interface"/>
+                    <rdf:Description rdf:about="&cscro;Struct"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasModifier -->
+
+    <owl:ObjectProperty rdf:about="&cscro;hasModifier">
+        <rdfs:range rdf:resource="&cscro;Modifier"/>
+        <owl:inverseOf rdf:resource="&cscro;isModifierOf"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;DataType"/>
+                    <rdf:Description rdf:about="&cscro;Member"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasNamespaceMember -->
+
+    <owl:ObjectProperty rdf:about="&cscro;hasNamespaceMember">
+        <owl:inverseOf rdf:resource="&cscro;isNamespaceMemberOf"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;CompilationUnit"/>
+                    <rdf:Description rdf:about="&cscro;Namespace"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;DataType"/>
+                    <rdf:Description rdf:about="&cscro;Namespace"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasProperty -->
+
+    <owl:ObjectProperty rdf:about="&cscro;hasProperty">
+        <rdfs:range rdf:resource="&cscro;Property"/>
+        <rdfs:subPropertyOf rdf:resource="&cscro;hasMember"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;Class"/>
+                    <rdf:Description rdf:about="&cscro;Interface"/>
+                    <rdf:Description rdf:about="&cscro;Struct"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#isAccessModifierOf -->
+
+    <owl:ObjectProperty rdf:about="&cscro;isAccessModifierOf">
+        <rdfs:domain rdf:resource="&cscro;AccessModifier"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;DataType"/>
+                    <rdf:Description rdf:about="&cscro;Member"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#isAttributeOf -->
+
+    <owl:ObjectProperty rdf:about="&cscro;isAttributeOf">
+        <rdfs:domain rdf:resource="&cscro;Attribute"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;DataType"/>
+                    <rdf:Description rdf:about="&cscro;Member"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#isConstructorOf -->
+
+    <owl:ObjectProperty rdf:about="&cscro;isConstructorOf">
+        <rdfs:domain rdf:resource="&cscro;Constructor"/>
+        <owl:inverseOf rdf:resource="&cscro;hasConstructor"/>
+        <rdfs:subPropertyOf rdf:resource="&cscro;isMemberOf"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;Class"/>
+                    <rdf:Description rdf:about="&cscro;Struct"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#isDataTypeOf -->
+
+    <owl:ObjectProperty rdf:about="&cscro;isDataTypeOf">
+        <rdf:type rdf:resource="&owl;InverseFunctionalProperty"/>
+        <rdfs:domain rdf:resource="&cscro;DataType"/>
+        <owl:inverseOf rdf:resource="&cscro;hasDataType"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;Class"/>
+                    <rdf:Description rdf:about="&cscro;CompilationUnit"/>
+                    <rdf:Description rdf:about="&cscro;Namespace"/>
+                    <rdf:Description rdf:about="&cscro;Struct"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#isFieldOf -->
+
+    <owl:ObjectProperty rdf:about="&cscro;isFieldOf">
+        <rdfs:domain rdf:resource="&cscro;Field"/>
+        <owl:inverseOf rdf:resource="&cscro;hasField"/>
+        <rdfs:subPropertyOf rdf:resource="&cscro;isMemberOf"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;Class"/>
+                    <rdf:Description rdf:about="&cscro;Struct"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#isMemberOf -->
+
+    <owl:ObjectProperty rdf:about="&cscro;isMemberOf">
+        <rdf:type rdf:resource="&owl;TransitiveProperty"/>
+        <rdfs:comment xml:lang="en">A member is a nested type that&apos;s directly enclosed within another type declaration</rdfs:comment>
+        <rdfs:domain rdf:resource="&cscro;Member"/>
+        <owl:inverseOf rdf:resource="&cscro;hasMember"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;Class"/>
+                    <rdf:Description rdf:about="&cscro;Interface"/>
+                    <rdf:Description rdf:about="&cscro;Struct"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#isMethodOf -->
+
+    <owl:ObjectProperty rdf:about="&cscro;isMethodOf">
+        <rdf:type rdf:resource="&owl;FunctionalProperty"/>
+        <rdfs:domain rdf:resource="&cscro;Method"/>
+        <owl:inverseOf rdf:resource="&cscro;hasMethod"/>
+        <rdfs:subPropertyOf rdf:resource="&cscro;isMemberOf"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;Class"/>
+                    <rdf:Description rdf:about="&cscro;Interface"/>
+                    <rdf:Description rdf:about="&cscro;Struct"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#isModifierOf -->
+
+    <owl:ObjectProperty rdf:about="&cscro;isModifierOf">
+        <rdfs:domain rdf:resource="&cscro;Modifier"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;DataType"/>
+                    <rdf:Description rdf:about="&cscro;Member"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#isNamespaceMemberOf -->
+
+    <owl:ObjectProperty rdf:about="&cscro;isNamespaceMemberOf">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;DataType"/>
+                    <rdf:Description rdf:about="&cscro;Namespace"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;CompilationUnit"/>
+                    <rdf:Description rdf:about="&cscro;Namespace"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#isPropertyOf -->
+
+    <owl:ObjectProperty rdf:about="&cscro;isPropertyOf">
+        <rdfs:domain rdf:resource="&cscro;Property"/>
+        <owl:inverseOf rdf:resource="&cscro;hasProperty"/>
+        <rdfs:subPropertyOf rdf:resource="&cscro;isMemberOf"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;Class"/>
+                    <rdf:Description rdf:about="&cscro;Interface"/>
+                    <rdf:Description rdf:about="&cscro;Struct"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#isUsedBy -->
+
+    <owl:ObjectProperty rdf:about="&cscro;isUsedBy">
+        <rdfs:comment xml:lang="en">Inverse of &apos;use&apos; relationship</rdfs:comment>
+        <rdfs:domain rdf:resource="&cscro;Namespace"/>
+        <rdfs:range>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;CompilationUnit"/>
+                    <rdf:Description rdf:about="&cscro;Namespace"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:range>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#uses -->
+
+    <owl:ObjectProperty rdf:about="&cscro;uses">
+        <rdfs:label xml:lang="en"></rdfs:label>
+        <rdfs:range rdf:resource="&cscro;Namespace"/>
+        <owl:inverseOf rdf:resource="&cscro;isUsedBy"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;CompilationUnit"/>
+                    <rdf:Description rdf:about="&cscro;Namespace"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasComment -->
+
+    <owl:DatatypeProperty rdf:about="&cscro;hasComment">
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;CompilationUnit"/>
+                    <rdf:Description rdf:about="&cscro;DataType"/>
+                    <rdf:Description rdf:about="&cscro;Member"/>
+                    <rdf:Description rdf:about="&cscro;Namespace"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasIdentifier -->
+
+    <owl:DatatypeProperty rdf:about="&cscro;hasIdentifier">
+        <rdfs:comment xml:lang="en">Method signature: the method&apos;s name and the parameter types.</rdfs:comment>
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;DataType"/>
+                    <rdf:Description rdf:about="&cscro;Member"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasName -->
+
+    <owl:DatatypeProperty rdf:about="&cscro;hasName">
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;CompilationUnit"/>
+                    <rdf:Description rdf:about="&cscro;Namespace"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#AccessModifier -->
+
+    <owl:Class rdf:about="&cscro;AccessModifier">
+        <rdfs:label xml:lang="en">Access Modifier</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cscro;Modifier"/>
+        <owl:disjointWith rdf:resource="&cscro;CompilationUnit"/>
+        <owl:disjointWith rdf:resource="&cscro;DataType"/>
+        <owl:disjointWith rdf:resource="&cscro;Member"/>
+        <owl:disjointWith rdf:resource="&cscro;Namespace"/>
+        <owl:disjointWith rdf:resource="&cscro;Program"/>
+        <rdfs:comment xml:lang="en">Denotes top-level and member-level accessibility excluding the default accessibility of a member</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#Attribute -->
+
+    <owl:Class rdf:about="&cscro;Attribute"/>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#Class -->
+
+    <owl:Class rdf:about="&cscro;Class">
+        <rdfs:label xml:lang="en">Class Type</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cscro;ReferenceType"/>
+        <owl:disjointWith rdf:resource="&cscro;Field"/>
+        <owl:disjointWith rdf:resource="&cscro;Interface"/>
+        <owl:disjointWith rdf:resource="&cscro;Method"/>
+        <owl:disjointWith rdf:resource="&cscro;Program"/>
+        <owl:disjointWith rdf:resource="&cscro;Property"/>
+        <rdfs:comment xml:lang="en">ClassType is an ontology concept that represents all kinds of Object Oriented classes in a program.</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#CompilationUnit -->
+
+    <owl:Class rdf:about="&cscro;CompilationUnit">
+        <rdfs:label xml:lang="en">Compilation Unit</rdfs:label>
+        <owl:disjointWith rdf:resource="&cscro;DataType"/>
+        <owl:disjointWith rdf:resource="&cscro;Interface"/>
+        <owl:disjointWith rdf:resource="&cscro;Member"/>
+        <owl:disjointWith rdf:resource="&cscro;Method"/>
+        <owl:disjointWith rdf:resource="&cscro;Program"/>
+        <rdfs:comment xml:lang="en">Denotes a single source code file (compilation unit)</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#Constructor -->
+
+    <owl:Class rdf:about="&cscro;Constructor">
+        <rdfs:subClassOf rdf:resource="&cscro;Member"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#DataType -->
+
+    <owl:Class rdf:about="&cscro;DataType">
+        <owl:disjointWith rdf:resource="&cscro;Member"/>
+        <owl:disjointWith rdf:resource="&cscro;Namespace"/>
+        <owl:disjointWith rdf:resource="&cscro;Program"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#Delegate -->
+
+    <owl:Class rdf:about="&cscro;Delegate">
+        <rdfs:subClassOf rdf:resource="&cscro;ReferenceType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#Enum -->
+
+    <owl:Class rdf:about="&cscro;Enum">
+        <rdfs:label xml:lang="en">Enum Type</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cscro;ValueType"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="&cscro;hasField"/>
+                <owl:allValuesFrom rdf:resource="&cscro;Field"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <owl:disjointWith rdf:resource="&cscro;Field"/>
+        <owl:disjointWith rdf:resource="&cscro;Interface"/>
+        <owl:disjointWith rdf:resource="&cscro;Method"/>
+        <owl:disjointWith rdf:resource="&cscro;Program"/>
+        <owl:disjointWith rdf:resource="&cscro;Property"/>
+        <rdfs:comment xml:lang="en">Represents a type with fields that consist of a fixed set of constants</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#Field -->
+
+    <owl:Class rdf:about="&cscro;Field">
+        <rdfs:label xml:lang="en">Field</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cscro;Member"/>
+        <owl:disjointWith rdf:resource="&cscro;Interface"/>
+        <owl:disjointWith rdf:resource="&cscro;Method"/>
+        <owl:disjointWith rdf:resource="&cscro;Program"/>
+        <owl:disjointWith rdf:resource="&cscro;Property"/>
+        <rdfs:comment xml:lang="en">Represents a class field</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#Interface -->
+
+    <owl:Class rdf:about="&cscro;Interface">
+        <rdfs:label xml:lang="en">Interface Type</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cscro;ReferenceType"/>
+        <owl:disjointWith rdf:resource="&cscro;Method"/>
+        <owl:disjointWith rdf:resource="&cscro;Program"/>
+        <owl:disjointWith rdf:resource="&cscro;Property"/>
+        <rdfs:comment xml:lang="en">A concept that represents an interface which is a reference type that can contain only constants, method signatures, and nested types</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#Member -->
+
+    <owl:Class rdf:about="&cscro;Member">
+        <owl:disjointWith rdf:resource="&cscro;Namespace"/>
+        <owl:disjointWith rdf:resource="&cscro;Program"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#Method -->
+
+    <owl:Class rdf:about="&cscro;Method">
+        <rdfs:label xml:lang="en">Method</rdfs:label>
+        <rdfs:subClassOf rdf:resource="&cscro;Member"/>
+        <owl:disjointWith rdf:resource="&cscro;Program"/>
+        <owl:disjointWith rdf:resource="&cscro;Property"/>
+        <rdfs:comment xml:lang="en">represents a method that may belong to a class or interface</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#Modifier -->
+
+    <owl:Class rdf:about="&cscro;Modifier"/>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#Namespace -->
+
+    <owl:Class rdf:about="&cscro;Namespace">
+        <rdfs:subClassOf rdf:resource="&owl;Thing"/>
+        <owl:disjointWith rdf:resource="&cscro;Program"/>
+        <owl:disjointWith rdf:resource="&cscro;Property"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#Program -->
+
+    <owl:Class rdf:about="&cscro;Program">
+        <rdfs:label xml:lang="en">Program</rdfs:label>
+        <owl:disjointWith rdf:resource="&cscro;Property"/>
+        <rdfs:comment xml:lang="en">Represents a C# Program which usually consists of one or more compilation units</rdfs:comment>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#Property -->
+
+    <owl:Class rdf:about="&cscro;Property">
+        <rdfs:subClassOf rdf:resource="&cscro;Member"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#ReferenceType -->
+
+    <owl:Class rdf:about="&cscro;ReferenceType">
+        <rdfs:subClassOf rdf:resource="&cscro;DataType"/>
+        <owl:disjointWith rdf:resource="&cscro;ValueType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#Struct -->
+
+    <owl:Class rdf:about="&cscro;Struct">
+        <rdfs:subClassOf rdf:resource="&cscro;ValueType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#ValueType -->
+
+    <owl:Class rdf:about="&cscro;ValueType">
+        <rdfs:subClassOf rdf:resource="&cscro;DataType"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.w3.org/2002/07/owl#Thing -->
+
+    <owl:Class rdf:about="&owl;Thing">
+        <dc:language xml:lang="en">The class Thing is the class that represents the set containing all individuals. All other classes in the ontology are subclasses of this class.</dc:language>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#DateTime -->
+
+    <owl:NamedIndividual rdf:about="&cscro;DateTime">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#TimeSpan -->
+
+    <owl:NamedIndividual rdf:about="&cscro;TimeSpan">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#abstract -->
+
+    <owl:NamedIndividual rdf:about="&cscro;abstract">
+        <rdf:type rdf:resource="&cscro;Modifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#async -->
+
+    <owl:NamedIndividual rdf:about="&cscro;async">
+        <rdf:type rdf:resource="&cscro;Modifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#bool -->
+
+    <owl:NamedIndividual rdf:about="&cscro;bool">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#byte -->
+
+    <owl:NamedIndividual rdf:about="&cscro;byte">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#char -->
+
+    <owl:NamedIndividual rdf:about="&cscro;char">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#const -->
+
+    <owl:NamedIndividual rdf:about="&cscro;const">
+        <rdf:type rdf:resource="&cscro;Modifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#decimal -->
+
+    <owl:NamedIndividual rdf:about="&cscro;decimal">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#double -->
+
+    <owl:NamedIndividual rdf:about="&cscro;double">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#dynamic -->
+
+    <owl:NamedIndividual rdf:about="&cscro;dynamic">
+        <rdf:type rdf:resource="&cscro;ReferenceType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#event -->
+
+    <owl:NamedIndividual rdf:about="&cscro;event">
+        <rdf:type rdf:resource="&cscro;Modifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#extern -->
+
+    <owl:NamedIndividual rdf:about="&cscro;extern">
+        <rdf:type rdf:resource="&cscro;Modifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#float -->
+
+    <owl:NamedIndividual rdf:about="&cscro;float">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#int -->
+
+    <owl:NamedIndividual rdf:about="&cscro;int">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#internal -->
+
+    <owl:NamedIndividual rdf:about="&cscro;internal">
+        <rdf:type rdf:resource="&cscro;AccessModifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#long -->
+
+    <owl:NamedIndividual rdf:about="&cscro;long">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#new -->
+
+    <owl:NamedIndividual rdf:about="&cscro;new">
+        <rdf:type rdf:resource="&cscro;Modifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#object -->
+
+    <owl:NamedIndividual rdf:about="&cscro;object">
+        <rdf:type rdf:resource="&cscro;ReferenceType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#override -->
+
+    <owl:NamedIndividual rdf:about="&cscro;override">
+        <rdf:type rdf:resource="&cscro;Modifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#partial -->
+
+    <owl:NamedIndividual rdf:about="&cscro;partial">
+        <rdf:type rdf:resource="&cscro;Modifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#private -->
+
+    <owl:NamedIndividual rdf:about="&cscro;private">
+        <rdf:type rdf:resource="&cscro;AccessModifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#protected -->
+
+    <owl:NamedIndividual rdf:about="&cscro;protected">
+        <rdf:type rdf:resource="&cscro;AccessModifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#public -->
+
+    <owl:NamedIndividual rdf:about="&cscro;public">
+        <rdf:type rdf:resource="&cscro;AccessModifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#readonly -->
+
+    <owl:NamedIndividual rdf:about="&cscro;readonly">
+        <rdf:type rdf:resource="&cscro;Modifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#sbyte -->
+
+    <owl:NamedIndividual rdf:about="&cscro;sbyte">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#sealed -->
+
+    <owl:NamedIndividual rdf:about="&cscro;sealed">
+        <rdf:type rdf:resource="&cscro;Modifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#short -->
+
+    <owl:NamedIndividual rdf:about="&cscro;short">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#static -->
+
+    <owl:NamedIndividual rdf:about="&cscro;static">
+        <rdf:type rdf:resource="&cscro;Modifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#string -->
+
+    <owl:NamedIndividual rdf:about="&cscro;string">
+        <rdf:type rdf:resource="&cscro;ReferenceType"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#uint -->
+
+    <owl:NamedIndividual rdf:about="&cscro;uint">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#ulong -->
+
+    <owl:NamedIndividual rdf:about="&cscro;ulong">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#unsafe -->
+
+    <owl:NamedIndividual rdf:about="&cscro;unsafe">
+        <rdf:type rdf:resource="&cscro;Modifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#ushort -->
+
+    <owl:NamedIndividual rdf:about="&cscro;ushort">
+        <rdf:type rdf:resource="&cscro;Struct"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#virtual -->
+
+    <owl:NamedIndividual rdf:about="&cscro;virtual">
+        <rdf:type rdf:resource="&cscro;Modifier"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#volatile -->
+
+    <owl:NamedIndividual rdf:about="&cscro;volatile">
+        <rdf:type rdf:resource="&cscro;Modifier"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.5.1) http://owlapi.sourceforge.net -->
+
