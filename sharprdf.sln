@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharprdf.Core", "Sharprdf.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharprdf.Core.Tests", "Sharprdf.Core.Tests\Sharprdf.Core.Tests.csproj", "{8DD7941B-9FB1-4FE5-AD4F-CEB859438276}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GS.Symbols", "GS.Symbols\GS.Symbols.csproj", "{82323C10-13AC-4C6C-B7CB-E65812445723}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sharprdf.Console", "Sharprdf.Console\Sharprdf.Console.csproj", "{ED16372F-60C8-4905-87B0-F0D48EF211B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,11 +33,20 @@ Global
 		{8DD7941B-9FB1-4FE5-AD4F-CEB859438276}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DD7941B-9FB1-4FE5-AD4F-CEB859438276}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DD7941B-9FB1-4FE5-AD4F-CEB859438276}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82323C10-13AC-4C6C-B7CB-E65812445723}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82323C10-13AC-4C6C-B7CB-E65812445723}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82323C10-13AC-4C6C-B7CB-E65812445723}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82323C10-13AC-4C6C-B7CB-E65812445723}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED16372F-60C8-4905-87B0-F0D48EF211B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED16372F-60C8-4905-87B0-F0D48EF211B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED16372F-60C8-4905-87B0-F0D48EF211B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED16372F-60C8-4905-87B0-F0D48EF211B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{348F4471-DB15-4696-BC71-3B0C3B016421} = {2ACCB11F-413E-48EE-80BE-24D44DAFF954}
+		{82323C10-13AC-4C6C-B7CB-E65812445723} = {2ACCB11F-413E-48EE-80BE-24D44DAFF954}
 	EndGlobalSection
 EndGlobal
