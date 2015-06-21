@@ -114,7 +114,6 @@
     <Compile Include="Interfaces\ISyntaxTreeBuilder.cs" />
     <Compile Include="KnowledgeBase.cs" />
     <Compile Include="Ontology.cs" />
-    <Compile Include="OwlLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SyntaxTreeBuilder.cs" />
   </ItemGroup>

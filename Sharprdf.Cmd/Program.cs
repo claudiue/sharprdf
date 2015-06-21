@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
+﻿using CommandLine;
+using Microsoft.CodeAnalysis.CSharp;
 using Sharprdf.Core;
 using Sharprdf.Core.Interfaces;
 using System;
@@ -6,11 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using VDS.RDF;
 using VDS.RDF.Writing;
 
-namespace Sharprdf.Console
+namespace Sharprdf.Cmd
 {
-    class Program
+    public class Program
     {
         #region Constants
 
@@ -255,10 +257,9 @@ namespace RoslynConsoleApp
     }
 }
 ";
-
         #endregion Constants
 
-        static void Main(string[] args)
+        static void MainTest(string[] args)
         {
             ISyntaxTreeBuilder syntaxTreeBuilder = new SyntaxTreeBuilder();
             var syntaxTree = syntaxTreeBuilder.BuildSyntaxTree(Sc2);//ScMinimum);
@@ -274,6 +275,60 @@ namespace RoslynConsoleApp
 
             //Save to a File
             rdfxmlwriter.Save(sourceCodeRdf, "graph2.rdf");
+        }
+
+
+        public class Options
+        {
+            [Option('o', "ontology", Required = true, HelpText = "Ontology file")]
+            public string OntologyFile { get; set; }
+
+            [Option('f', "file", Required = true, HelpText = "Source code files to be processed")]
+            public IEnumerable<string> SurceCodeFiles { get; set; }
+
+            [Option('p', "project", Required = true, HelpText = "Project to be processed")]
+            public string ProjectPath { get; set; }
+
+            // omitting long name, default --verbose
+            [Option(DefaultValue = true, HelpText = "Verbose mode")]
+            public bool Verbose { get; set; }
+        }
+
+
+        static void Main(string[] args)
+        {
+            var result = CommandLine.Parser.Default.ParseArguments<Options>(args);
+            if (result.Errors.Any())
+                throw new Exception("Errors when parsing arguments!");
+
+            if (result.Value.Verbose) 
+            {
+                Console.WriteLine("============== Sharp RDF ===============");
+                Console.WriteLine("Ontology file loaded: {0}", result.Value.OntologyFile);
+                Console.WriteLine("Source code files loaded: {0}", string.Join(",", result.Value.SurceCodeFiles.ToArray()));
+                Console.WriteLine("----------------------------------------");
+            }
+
+            var ontology = new Ontology(name: "C# Ontology", prefix: "cscro", fileName: result.Value.OntologyFile);
+            var engine = new Engine(ontology);
+
+            IDictionary<string, IGraph> graphs = new Dictionary<string, IGraph>();
+            foreach(var fileName in result.Value.SurceCodeFiles)
+            {
+                var streamReader = new System.IO.StreamReader(fileName);
+                var sourceCode = streamReader.ReadToEnd();
+
+                var graph = engine.CreateRdfGraph(fileName, sourceCode);
+                graphs.Add(fileName, graph);
+            }
+
+            var rdfxmlwriter = new RdfXmlWriter();
+            foreach (var fileName in graphs.Keys)
+            {
+                rdfxmlwriter.Save(graphs[fileName], string.Format("results/{0}.rdf", fileName));
+                if (result.Value.Verbose)
+                    Console.WriteLine("Successfully created RDF graph at results/{0}.rdf", fileName);
+            }
         }
     }
 }

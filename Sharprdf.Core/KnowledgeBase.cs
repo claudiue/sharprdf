@@ -24,6 +24,10 @@ namespace Sharprdf.Core
             _tripleStore = new TripleStore();
         }
 
+        public KnowledgeBase(Ontology ontology) : this("KB", ontology)
+        {
+        }
+
         public IGraph CreateGraph(string graphId)
         {
             graphId = graphId.Replace(" ", "_");

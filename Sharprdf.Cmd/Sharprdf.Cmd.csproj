@@ -7,7 +7,7 @@
     <ProjectGuid>{ED16372F-60C8-4905-87B0-F0D48EF211B2}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sharprdf.Console</RootNamespace>
+    <RootNamespace>Sharprdf.Cmd</RootNamespace>
     <AssemblyName>Sharprdf.Console</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLine">
+      <HintPath>..\packages\CommandLineParser.2.0.5-pre\lib\net45\CommandLine.dll</HintPath>
+    </Reference>
     <Reference Include="dotNetRDF">
       <HintPath>..\packages\dotNetRDF.1.0.8.3533\lib\net40\dotNetRDF.dll</HintPath>
     </Reference>
