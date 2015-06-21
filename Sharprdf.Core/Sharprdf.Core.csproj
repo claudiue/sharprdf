@@ -109,6 +109,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine.cs" />
     <Compile Include="Interfaces\IGraphBuilder.cs" />
     <Compile Include="Interfaces\ISyntaxTreeBuilder.cs" />
     <Compile Include="KnowledgeBase.cs" />

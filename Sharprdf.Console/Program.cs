@@ -263,7 +263,7 @@ namespace RoslynConsoleApp
             ISyntaxTreeBuilder syntaxTreeBuilder = new SyntaxTreeBuilder();
             var syntaxTree = syntaxTreeBuilder.BuildSyntaxTree(Sc2);//ScMinimum);
 
-            var csharpOntology = new Ontology(name: "C# OOP Ontology", prefix: "cscro", fileName: "cscro.owl");
+            var csharpOntology = new Ontology(name: "C# OOP Ontology", prefix: "cscro", fileName: "cscro.v2.owl");
             var knowledgeBase = new KnowledgeBase("Main KB", csharpOntology);
 
             var graph1 = knowledgeBase.CreateGraph("graph2");

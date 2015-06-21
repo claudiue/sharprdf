@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
+        <uri id="Automatically generated entry, Timestamp=1434816336920" name="http://www.cs.uwm.edu/~alnusair/ontologies/composite.owl" uri="composite.owl.xml"/>
+        <uri id="Automatically generated entry, Timestamp=1434816336920" name="http://www.cs.uwm.edu/~alnusair/ontologies/design-pattern.owl" uri="design-pattern.owl.xml"/>
+        <uri id="Automatically generated entry, Timestamp=1434816336920" name="http://www.cs.uwm.edu/~alnusair/ontologies/observer.owl" uri="observer.owl.xml"/>
+        <uri id="Automatically generated entry, Timestamp=1434816336920" name="duplicate:http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl" uri="scro.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1434816336920" name="duplicate:http://www.cs.uwm.edu/~alnusair/ontologies/scro.owl" uri="scro.owl.xml"/>
+        <uri id="Automatically generated entry, Timestamp=1434816336920" name="http://www.cs.uwm.edu/~alnusair/ontologies/singleton.owl" uri="singleton.owl.xml"/>
+        <uri id="Automatically generated entry, Timestamp=1434816336920" name="http://www.cs.uwm.edu/~alnusair/ontologies/template-method.owl" uri="template-method.owl.xml"/>
+        <uri id="Automatically generated entry, Timestamp=1434816336920" name="http://www.cs.uwm.edu/~alnusair/ontologies/visitor.owl" uri="visitor.owl.xml"/>
+        <uri id="Automatically generated entry, Timestamp=1434816336920" name="duplicate:http://www.sharprdf.net/ontologies/cscro.owl" uri="cscro.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1434816336920" name="duplicate:http://www.sharprdf.net/ontologies/cscro.owl" uri="cscro.v2.owl"/>
+    </group>
+</catalog>
