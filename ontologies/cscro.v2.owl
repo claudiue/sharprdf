@@ -540,6 +540,31 @@ This ontology is created to explicitly represent the conceptual knowledge struct
     
 
 
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasReturnType -->
+
+    <owl:DatatypeProperty rdf:about="&cscro;hasReturnType">
+        <rdfs:domain rdf:resource="&cscro;Method"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.sharprdf.net/ontologies/cscro.owl#hasType -->
+
+    <owl:DatatypeProperty rdf:about="&cscro;hasType">
+        <rdfs:range rdf:resource="&xsd;string"/>
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&cscro;Field"/>
+                    <rdf:Description rdf:about="&cscro;Property"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+    </owl:DatatypeProperty>
+    
+
+
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
@@ -632,12 +657,6 @@ This ontology is created to explicitly represent the conceptual knowledge struct
     <owl:Class rdf:about="&cscro;Enum">
         <rdfs:label xml:lang="en">Enum Type</rdfs:label>
         <rdfs:subClassOf rdf:resource="&cscro;ValueType"/>
-        <rdfs:subClassOf>
-            <owl:Restriction>
-                <owl:onProperty rdf:resource="&cscro;hasField"/>
-                <owl:allValuesFrom rdf:resource="&cscro;Field"/>
-            </owl:Restriction>
-        </rdfs:subClassOf>
         <owl:disjointWith rdf:resource="&cscro;Field"/>
         <owl:disjointWith rdf:resource="&cscro;Interface"/>
         <owl:disjointWith rdf:resource="&cscro;Method"/>
