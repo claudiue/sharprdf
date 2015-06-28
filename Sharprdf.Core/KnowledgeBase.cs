@@ -132,6 +132,9 @@ namespace Sharprdf.Core
             var cscroIsMethodOf = g.CreateUriNode("cscro:isMethodOf");
             var cscroHasProperty = g.CreateUriNode("cscro:hasProperty");
             var cscroIsPropertyOf = g.CreateUriNode("cscro:isPropertyOf");
+            var cscroHasConstructor = g.CreateUriNode("cscro:hasConstructor");
+            var cscroIsConstructorOf = g.CreateUriNode("cscro:isConstructorOf");
+
             var cscroHasAttribute = g.CreateUriNode("cscro:hasAttribute");
             var cscroIsAttributeOf = g.CreateUriNode("cscro:isAttributeOf");
 
@@ -277,6 +280,17 @@ namespace Sharprdf.Core
                         g.Assert(new Triple(childUriNode, cscroHasIdentifier, g.CreateLiteralNode(mIdentifier, "en")));
                         g.Assert(new Triple(childUriNode, cscroHasReturnType, g.CreateLiteralNode(mReturnType, "en")));
                         g = AssertModifiers(g, childUriNode, methDecl.Modifiers);
+                        break;
+
+                    case (int)SyntaxKind.ConstructorDeclaration:
+                        var ctorDecl = (ConstructorDeclarationSyntax)child;
+                        childUriNode = g.CreateUriNode(string.Format(":constructor_{0}", ctorDecl.GetHashCode()));
+                        g.Assert(new Triple(childUriNode, rdfType, cscroConstructor));
+                        g.Assert(new Triple(childUriNode, cscroIsConstructorOf, uriNode));
+                        g.Assert(new Triple(uriNode, cscroHasConstructor, childUriNode));
+                        g.Assert(new Triple(childUriNode, rdfsLabel, g.CreateLiteralNode(string.Format("constructor {0}", ctorDecl.Identifier.ToString()), "en")));
+                        g.Assert(new Triple(childUriNode, cscroHasIdentifier, g.CreateLiteralNode(ctorDecl.Identifier.ToString(), "en")));
+                        g = AssertModifiers(g, childUriNode, ctorDecl.Modifiers);
                         break;
 
                     case (int)SyntaxKind.AttributeList:
