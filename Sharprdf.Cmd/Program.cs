@@ -4,6 +4,7 @@ using Sharprdf.Core;
 using Sharprdf.Core.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -289,6 +290,9 @@ namespace RoslynConsoleApp
             [Option('p', "project", Required = true, HelpText = "Project to be processed")]
             public string ProjectPath { get; set; }
 
+            [Option('t', "to", Required = false, HelpText = "Output folder")]
+            public string To { get; set; }
+
             // omitting long name, default --verbose
             [Option(DefaultValue = true, HelpText = "Verbose mode")]
             public bool Verbose { get; set; }
@@ -312,22 +316,50 @@ namespace RoslynConsoleApp
             var ontology = new Ontology(name: "C# Ontology", prefix: "cscro", fileName: result.Value.OntologyFile);
             var engine = new Engine(ontology);
 
+            var filesToBeProcessed = new List<string>();
+            var projectPath = result.Value.ProjectPath;
+            if (!string.IsNullOrEmpty(projectPath) && Directory.Exists(projectPath))
+            {
+                var filesInDirectory = Directory.GetFiles(projectPath, "*.cs");
+                if (filesInDirectory.Count() > 0)
+                {
+                    foreach (var file in filesInDirectory)
+                    {
+                        filesToBeProcessed.Add(file);
+                        if (result.Value.Verbose)
+                            Console.WriteLine("Project file loaded: {0}", file);                            
+                    }
+                    if (result.Value.Verbose)
+                        Console.WriteLine("----------------------------------------");
+                }
+            }
+
+            if (result.Value.SurceCodeFiles.Count() > 0)
+                filesToBeProcessed = filesToBeProcessed.Concat(result.Value.SurceCodeFiles.AsEnumerable()).ToList();
+
             IDictionary<string, IGraph> graphs = new Dictionary<string, IGraph>();
-            foreach(var fileName in result.Value.SurceCodeFiles)
+            foreach (var fileName in filesToBeProcessed)
             {
                 var streamReader = new System.IO.StreamReader(fileName);
                 var sourceCode = streamReader.ReadToEnd();
 
-                var graph = engine.CreateRdfGraph(fileName, sourceCode);
-                graphs.Add(fileName, graph);
+                var newFileName = fileName.Replace("\\", "_");
+                var graph = engine.CreateRdfGraph(newFileName, sourceCode);
+                graphs.Add(newFileName, graph);
             }
+
+            var outputFolder = result.Value.To;
+            if (string.IsNullOrEmpty(outputFolder))
+                outputFolder = "DefaultOutput";
+
+            Directory.CreateDirectory(outputFolder); 
 
             var rdfxmlwriter = new RdfXmlWriter();
             foreach (var fileName in graphs.Keys)
             {
-                rdfxmlwriter.Save(graphs[fileName], string.Format("results/{0}.rdf", fileName));
+                rdfxmlwriter.Save(graphs[fileName], string.Format("{0}/{1}.rdf", outputFolder, fileName));
                 if (result.Value.Verbose)
-                    Console.WriteLine("Successfully created RDF graph at results/{0}.rdf", fileName);
+                    Console.WriteLine("Successfully created RDF graph at {0}/{1}.rdf", outputFolder, fileName);
             }
         }
     }

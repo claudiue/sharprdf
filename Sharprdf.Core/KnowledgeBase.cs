@@ -145,13 +145,19 @@ namespace Sharprdf.Core
             var cscroHasComment = g.CreateUriNode("cscro:hasComment");
 
 
-            var comments = node.ChildTokens().FirstOrDefault().GetAllTrivia()
-                .Where(t => t.IsKind(SyntaxKind.SingleLineCommentTrivia)
-                            || t.IsKind(SyntaxKind.MultiLineCommentTrivia));
-
-            foreach(var comment in comments)
+            try
             {
-                g.Assert(new Triple(uriNode, cscroHasComment, g.CreateLiteralNode(comment.ToString(), "en")));
+                var comments = node.ChildTokens().FirstOrDefault().GetAllTrivia()
+                    .Where(t => t.IsKind(SyntaxKind.SingleLineCommentTrivia)
+                                || t.IsKind(SyntaxKind.MultiLineCommentTrivia));
+
+                foreach (var comment in comments)
+                {
+                    g.Assert(new Triple(uriNode, cscroHasComment, g.CreateLiteralNode(comment.ToString(), "en")));
+                }
+            }
+            catch 
+            {
             }
 
             foreach (var child in node.ChildNodes())

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Sharprdf.Console")]
+[assembly: AssemblyTitle("sharprdf")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Sharprdf.Console")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyProduct("sharprdf")]
+[assembly: AssemblyCopyright("Copyright ©  2015 Claudiu Epure")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

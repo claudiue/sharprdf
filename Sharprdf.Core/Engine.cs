@@ -15,7 +15,7 @@ namespace Sharprdf.Core
         private SyntaxTreeBuilder _syntaxTreeBuilder;
 
         public Engine()
-            : this(new Ontology(name: "C# Ontology", prefix: "cscro", fileName: "cscro.v2.owl")) { }
+            : this(new Ontology(name: "C# Ontology", prefix: "cscro", fileName: "cscro.owl")) { }
 
         public Engine(Ontology ontology)
         {
